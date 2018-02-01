@@ -1,0 +1,16 @@
+
+<div class="outer">
+  <div class="wrapper">
+    <div class="popup"> <a class="close-btn"  aria-hidden="true" data-dismiss="modal"  href="javascript:void(0)" ng-click="login_register_close()"><i class="fa fa-times" aria-hidden="true"></i></a>
+      <div class="popup-inner">
+        <div class="logo">
+            <img ng-src="{{site_preferences.logo?site_preferences.logo:'assets/img/logoX200.png'}}"  />
+        <p>You can login or sign up using the following buttons</p>
+        <div class="popup-btn">
+          <button class="btn btn-secondary" type="button" ui-sref="signup({user_id: '{{user.id}}'})" ng-click="login_register_close()">Sign up</button>
+          <button class="btn btn-secondary border-btn" type="button"  ng-click="check_login();login_register_close()">Log in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

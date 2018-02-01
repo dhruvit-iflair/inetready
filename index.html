@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<!--
+    BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
+    Version: 1.4.2
+    Purchase: http://wrapbootstrap.com
+-->
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="app" ng-controller="AppCtrl">
+    <!-- Head -->
+    <head>
+        <meta charset="utf-8" />
+        <title ng-if="pagetitle" ng-bind="pagetitle"></title>
+        <title ng-if="!pagetitle" page-title ></title>
+
+        <meta property="og:title" content="...e" />
+        <meta property="og:image" content="assets/img/logo.png" />
+        <meta property="og:description" content="..." />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="shortcut icon" ng-href="{{site_preferences.favicon?site_preferences.favicon:'assets/img/favicon.png'}}" type="image/x-icon">
+            <base href="/" />
+            <!--Basic Styles-->
+            <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+            <link ng-if="settings.rtl" ng-href="assets/css/bootstrap-rtl.min.css" rel="stylesheet" />
+            <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+            <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+
+            <!--Fonts-->
+            <style>
+                @@font-face {
+                    font-family: 'WYekan';
+                    src: url('/assets/fonts/BYekan.woff') format('woff');
+                    font-weight: normal;
+                    font-style: normal;
+                }
+            </style>
+            <link href="http://fonts.googleapis.com/earlyaccess/droidarabickufi.css" rel="stylesheet" type="text/css" />
+            <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+                  rel="stylesheet" type="text/css">
+
+                <!--Beyond styles-->
+                <link ng-if="!settings.rtl" href="assets/css/beyond.min.css" rel="stylesheet" />
+                <link ng-if="settings.rtl" href="assets/css/beyond-rtl.min.css" rel="stylesheet" />
+                <link href="assets/css/demo.min.css" rel="stylesheet" />
+                <link href="assets/css/typicons.min.css" rel="stylesheet" />
+                <link href="assets/css/animate.min.css" rel="stylesheet" />
+                <link ng-href="{{settings.skin}}" rel="stylesheet" type="text/css" />
+
+
+                <!--                <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>-->
+                </head>
+                <!-- /Head -->
+
+                <!-- Body -->
+                <body>
+                    
+                    <div ui-view></div>
+
+                    <!-- Scripts -->
+
+                    <script src="lib/jquery/jquery.min.js"></script>
+                    <script src="lib/jquery/bootstrap.js"></script>
+                    <script src="lib/jquery/evercookie.js"></script>
+                    <script src="lib/angular/angular.js"></script>
+                    <script src="lib/angular/angular-file-upload.min.js"></script>
+                    <script src="lib/angular/ng-file-upload.min.js"></script>
+                    <script src="lib/angular/flowplayer-3.2.12.min.js"></script>
+
+                    <script src="lib/utilities.js"></script>
+
+                    <script src="lib/angular/angular-animate/angular-animate.js"></script>
+                    <script src="lib/angular/angular-cookies/angular-cookies.js"></script>
+                    <script src="lib/angular/angular-cookies/angular-cookie.min.js"></script>
+                    <script src="lib/angular/angular-resource/angular-resource.js"></script>
+                    <script src="lib/angular/angular-sanitize/angular-sanitize.js"></script>
+                    <script src="lib/angular/angular-touch/angular-touch.js"></script>
+
+                    <script src="lib/angular/angular-ui-router/angular-ui-router.js"></script>
+                    <script src="lib/angular/angular-ocLazyLoad/ocLazyLoad.js"></script>
+                    <script src="lib/angular/angular-ngStorage/ngStorage.js"></script>
+                    <script src="lib/angular/angular-ui-utils/angular-ui-utils.js"></script>
+                    <script src="lib/angular/angular-breadcrumb/angular-breadcrumb.js"></script>
+
+                    <script src="lib/angular/angular-ui-bootstrap/ui-bootstrap.js"></script>
+                    <script src="lib/jquery/slimscroll/jquery.slimscroll.js"></script>
+                    <script src="lib/angular/bootstrap-contextmenu.js"></script>
+                    <script src="lib/angular/angular-slider/rzslider.min.js"></script>
+
+
+                    <!-- GET DEVICE, OS TYPE DETAILS -->
+                    <script type="text/javascript" src="lib/angular/ng-device-detector/ng-device-detector.min.js"></script>
+                    <script type="text/javascript" src="lib/angular/re-tree/re-tree.min.js"></script>
+
+                    <!-- App Config and Routing Scripts -->
+                    <script src="app/app.js"></script>
+                    <script src="app/config.js"></script>
+                    <script src="app/config.lazyload.js"></script>
+                    <script src="app/config.router.js"></script>
+                    <script src="app/beyond.js"></script>
+
+                    <!-- Controllers -->
+                    <script src="app/controllers/uploadphoto.js"></script>
+
+                    <!-- Services -->
+                    <script src="app/services/services.js"></script>
+                    <script src="app/services/global_data.js"></script>
+
+                    <!-- Layout Related Directives -->
+                    <script src="app/directives/loading.js"></script>
+                    <script src="app/directives/skin.js"></script>
+                    <script src="app/directives/sidebar.js"></script>
+                    <script src="app/directives/header.js"></script>
+                    <script src="app/directives/navbar.js"></script>
+                    <script src="app/directives/chatbar.js"></script>
+                    <script src="app/directives/widget.js"></script>
+                    <script src="app/directives/pwcheck.js"></script>
+                    <script src="app/directives/input-url.js"></script>
+                    <script src="app/directives/flipcard.js"></script>
+                    <script src="app/directives/stringtonumber.js"></script>
+
+                    <!-- Created by arun-->
+                    <!--<script src="app/controllers/myNoteCtrl.js"></script>-->
+                    <link href="assets/css/image_style.css" rel="stylesheet" />
+                    <link href="assets/css/new-popup.css" rel="stylesheet" />
+                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoQVMrvscW2Xvk7dvL1oygYMK1jvqVUZE"></script>
+                    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+                    </script>
+                    <script type="text/javascript" src="http://l2.io/ip.js?var=myip"></script>
+
+                </body>
+                <!--  /Body -->
+                </html>

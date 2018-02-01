@@ -1,0 +1,1008 @@
+<div class="row" ng-controller="ProfileCtrl">
+    <div class="col-md-12">
+        <div class="profile-container">
+            <div class="profile-header row">
+                <div class="col-lg-2 col-md-4 col-sm-12 text-center">
+                    <img alt="Avatar" class="header-avatar" ng-show='user.profile_image' ng-src="{{user.profile_image?user.profile_image:'assets/img/avatars/default_user.png'}}" />
+                </div>
+                <div class="col-lg-5 col-md-8 col-sm-12 profile-info">
+                    <div class="header-fullname">{{user.admin_name}}</div>
+                    <a href="#" class="btn btn-palegreen btn-sm  btn-follow">
+                        <i class="fa fa-check"></i>
+                        Following
+                    </a>
+		    <div class="header-information" ng-if="!user.url_type"><a ng-href="{{user.default_url}}" target="_blank">{{user.default_url}}</a></div>
+		    <div class="header-information" ng-if="user.url_type"><a ng-href="{{user.instance_url}}" target="_blank">{{user.instance_url}}</a></div>
+                    <div class="header-information">
+                        {{user.about_me}}
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value pink">{{user.following}}</div>
+                            <div class="stats-title">FOLLOWING</div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value pink">{{user.followers}}</div>
+                            <div class="stats-title">FOLLOWERS</div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value pink">1207</div>
+                            <div class="stats-title">POSTS</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            <span ng-if="user.city"><i class="glyphicon glyphicon-map-marker" ></i> {{user.city}}, {{user.state}}</span>
+                            <span ng-if="!user.city"><i class="glyphicon glyphicon-map-marker" ng-if="user.city"></i></span>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            Role: <strong>{{user.role}}</strong>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            Age: <strong> {{user.age}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-body">
+                <div class="col-lg-12">
+                    <tabset flat="true" justified="true">
+                        <tab heading="Overview">
+                            <div class="row profile-overview">
+                                <div class="col-md-8">
+                                    <h6 class="row-title before-themeprimary no-margin-top">PROFILE VISITS</h6>
+                                    <div id="placeholder" class="chart"></div>
+                                    <h6 class="row-title before-orange">FOLLOWERS</h6>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/Javi-Jimenez.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat orange radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-remove"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">JAVI JIMENEZ</div>
+                                                    <div class="databox-text darkgray">Manager</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/adam-jansen.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat palegreen radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-plus"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">LEE MUNROE</div>
+                                                    <div class="databox-text darkgray">Developer</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/Nicolai-Larson.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat palegreen radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-plus"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">NICOLAI LARSON</div>
+                                                    <div class="databox-text darkgray">Manager</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <h6 class="row-title before-palegreen">FOLLOWING</h6>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/John-Smith.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat orange radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-remove"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">JOHN SMITH</div>
+                                                    <div class="databox-text darkgray">Architect</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/Matt-Cheuvront.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat palegreen radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-plus"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">MATT CHEUVRONT</div>
+                                                    <div class="databox-text darkgray">Developer</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-graded">
+                                                <div class="databox-left no-padding">
+                                                    <img src="assets/img/avatars/Stephanie-Walter.jpg" style="width:65px; height:65px;">
+                                                </div>
+                                                <div class="databox-right padding-top-20 bg-whitesmoke">
+                                                    <div class="databox-stat orange radius-bordered">
+                                                        <i class="stat-icon glyphicon glyphicon-remove"></i>
+                                                    </div>
+                                                    <div class="databox-text darkgray">KATE WALTER</div>
+                                                    <div class="databox-text darkgray">Developer</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <h6 class="row-title before-yellow">YOU MAY ALSO KNOW</h6>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom">
+                                                <div class="databox-top bg-white padding-10">
+                                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                        <img src="assets/img/avatars/Sergey-Azovskiy.jpg" style="width:75px; height:75px;" class="image-circular bordered-3 bordered-palegreen">
+                                                    </div>
+                                                    <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left padding-10">
+                                                        <span class="databox-header carbon no-margin">Martin James</span>
+                                                        <span class="databox-text lightcarbon no-margin"> Software Manager at Microsoft </span>
+                                                    </div>
+                                                </div>
+                                                <div class="databox-bottom bg-white no-padding">
+                                                    <div class="databox-row row-12">
+                                                        <div class="databox-row row-6 no-padding">
+                                                            <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                                                <span class="databox-text sonic-silver  no-margin">Posts</span>
+                                                                <span class="databox-number lightcarbon no-margin">510</span>
+                                                            </div>
+                                                            <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                                                <span class="databox-text sonic-silver no-margin">Followers</span>
+                                                                <span class="databox-number lightcarbon no-margin">908</span>
+                                                            </div>
+                                                            <div class="databox-cell cell-4 no-padding text-align-center">
+                                                                <span class="databox-text sonic-silver no-margin">Following</span>
+                                                                <span class="databox-number lightcarbon no-margin">286</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="databox-row row-6 padding-10">
+                                                            <button class="btn btn-palegreen btn-sm pull-right">FOLLOW</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom">
+                                                <div class="databox-top bg-white padding-10">
+                                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                        <img src="assets/img/avatars/Osvaldus-Valutis.jpg" style="width:75px; height:75px;" class="image-circular bordered-3 bordered-palegreen">
+                                                    </div>
+                                                    <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left padding-10">
+                                                        <span class="databox-header carbon no-margin">Osvaldus Valutis</span>
+                                                        <span class="databox-text lightcarbon no-margin"> Graphic Designer at Yahoo! </span>
+                                                    </div>
+                                                </div>
+                                                <div class="databox-bottom bg-white no-padding">
+                                                    <div class="databox-row row-12">
+                                                        <div class="databox-row row-6 no-padding">
+                                                            <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                                                <span class="databox-text sonic-silver  no-margin">Posts</span>
+                                                                <span class="databox-number lightcarbon no-margin">102</span>
+                                                            </div>
+                                                            <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                                                <span class="databox-text sonic-silver no-margin">Followers</span>
+                                                                <span class="databox-number lightcarbon no-margin">634</span>
+                                                            </div>
+                                                            <div class="databox-cell cell-4 no-padding text-align-center">
+                                                                <span class="databox-text sonic-silver no-margin">Following</span>
+                                                                <span class="databox-number lightcarbon no-margin">100</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="databox-row row-6 padding-10">
+                                                            <button class="btn btn-palegreen btn-sm pull-right">FOLLOW</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <form method="post" class="well padding-bottom-10" onsubmit="return false;">
+                                        <span class="input-icon icon-right">
+                                            <textarea rows="2" class="form-control" placeholder="Post a new message"></textarea>
+                                            <i class="fa fa-camera themeprimary"></i>
+                                        </span>
+                                        <div class="padding-top-10 text-align-right">
+                                            <a class="btn btn-sm btn-primary">
+                                                Send
+                                            </a>
+                                        </div>
+                                    </form>
+                                    <div>
+                                        <div class="comment">
+                                            <img src="assets/img/avatars/adam-jansen.jpg" alt="" class="comment-avatar">
+                                            <div class="comment-body">
+                                                <div class="comment-text">
+                                                    <div class="comment-header">
+                                                        <a href="#" title="">Adam Jansen</a><span>about 2 minuts ago</span>
+                                                    </div>
+                                                    Story based around the idea of time lapse, animation to post soon!
+                                                </div>
+                                                <div class="comment-footer">
+                                                    <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                    <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                    <a href="#">Reply</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="comment">
+                                                <img src="assets/img/avatars/John-Smith.jpg" alt="" class="comment-avatar">
+                                                <div class="comment-body">
+                                                    <div class="comment-text">
+                                                        <div class="comment-header">
+                                                            <a href="#" title="">John Smith</a><span>about 1 hour ago</span>
+                                                        </div>
+                                                        Wow impressive!
+                                                    </div>
+                                                    <div class="comment-footer">
+                                                        <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                        <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                        <a href="#">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="comment">
+                                                <img src="assets/img/avatars/Matt-Cheuvront.jpg" alt="" class="comment-avatar">
+                                                <div class="comment-body">
+                                                    <div class="comment-text">
+                                                        <div class="comment-header">
+                                                            <a href="#" title="">Matt Cheuvront</a><span>about 2 hours ago</span>
+                                                        </div>
+                                                        Wow, that is really nice.
+                                                    </div>
+                                                    <div class="comment-footer">
+                                                        <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                        <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                        <a href="#">Reply</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="comment">
+                                                    <img src="assets/img/avatars/Stephanie-Walter.jpg" alt="" class="comment-avatar">
+                                                    <div class="comment-body">
+                                                        <div class="comment-text">
+                                                            <div class="comment-header">
+                                                                <a href="#" title="">Stephanie Walter</a><span>3 hours ago</span>
+                                                            </div>
+                                                            Nice work, makes me think of The Money Pit.
+                                                        </div>
+                                                        <div class="comment-footer">
+                                                            <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                            <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                            <a href="#">Reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment">
+                                            <img src="assets/img/avatars/divyia.jpg" alt="" class="comment-avatar">
+                                            <div class="comment-body">
+                                                <div class="comment-text">
+                                                    <div class="comment-header">
+                                                        <a href="#" title="">Kim Ryder</a><span>about 4 hours ago</span>
+                                                    </div>
+                                                    i'm in the middle of a timelapse animation myself! (Very different though.) Awesome stuff.
+                                                </div>
+                                                <div class="comment-footer">
+                                                    <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                    <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                    <a href="#">Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment">
+                                            <img src="assets/img/avatars/Nicolai-Larson.jpg" alt="" class="comment-avatar">
+                                            <div class="comment-body">
+                                                <div class="comment-text">
+                                                    <div class="comment-header">
+                                                        <a href="#" title="">Nicolai Larson</a><span>10 hours ago</span>
+                                                    </div>
+                                                    the parallax is a little odd but O.o that house build is awesome!!
+                                                </div>
+                                                <div class="comment-footer">
+                                                    <a href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                                                    <a href="#"><i class="fa fa-thumbs-o-down"></i></a>
+                                                    <a href="#">Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Events">
+                            <ul class="timeline animated fadeInDown">
+                                <li>
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            8:19
+                                        </span><span class="timeline-date">Today</span>
+                                    </div>
+                                    <div class="timeline-badge blue">
+                                        <i class="fa fa-tag"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <span class="timeline-title">
+                                                New Items Arrived
+                                            </span>
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Today</span>
+                                                    -
+                                                    <span class="timeline-time">8:19</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Purchased new stationary items for head office</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            3:10
+                                        </span><span class="timeline-date">Today</span>
+                                    </div>
+                                    <div class="timeline-badge darkorange">
+                                        <i class="fa fa-map-marker font-120"></i>
+                                    </div>
+                                    <div class="timeline-panel bordered-right-3 bordered-orange">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <span class="timeline-title">
+                                                Visit Appointment
+                                            </span>
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Today</span>
+                                                    -
+                                                    <span class="timeline-time">3:10</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Outdoor visit at California State Route 85 with John Boltana &amp; Harry Piterson regarding to setup a new show room.</p>
+                                            <p>
+                                                <i class="orange fa fa-exclamation"></i> New task added for <span><a href="#" class="info">James Dean</a></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            8:19
+                                        </span><span class="timeline-date">Yesterday</span>
+                                    </div>
+                                    <div class="timeline-badge sky">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="timeline-panel bordered-top-3 bordered-azure">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <span class="timeline-title">
+                                                Bank Report
+                                            </span>
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Yesterday</span>
+                                                    -
+                                                    <span class="timeline-time">8:19</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>
+                                                Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sem neque sed ipsum.
+                                            </p>
+                                            Tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            6:08
+                                        </span><span class="timeline-date">Yesterday</span>
+                                    </div>
+                                    <div class="timeline-badge sky">
+                                        <img src="assets/img/avatars/Sergey-Azovskiy.jpg" class="badge-picture" />
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <span class="timeline-title">
+                                                <a href="">Sergey Azovskiy</a> has commented on your <a href="">status</a>
+                                            </span>
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Yesterday</span>
+                                                    -
+                                                    <span class="timeline-time">6:08</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>
+                                                <i class="orange fa fa-quote-left"></i> Happy Birthday Lydia.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            7:00
+                                        </span><span class="timeline-date">Yesterday</span>
+                                    </div>
+                                    <div class="timeline-badge danger">
+                                        <i class="fa fa-exclamation font-120"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <span class="timeline-title danger">
+                                                Deadline Added
+                                            </span>
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Yesterday</span>
+                                                    -
+                                                    <span class="timeline-time">7:00</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Dyvia Phillips added new milestone <span><a class="danger" href="#">UI</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-datetime">
+                                        <span class="timeline-time">
+                                            3:09
+                                        </span><span class="timeline-date">Yesterday</span>
+                                    </div>
+                                    <div class="timeline-badge">
+                                        <i class="fa fa-picture-o darkpink"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-header bordered-bottom bordered-blue">
+                                            <p class="timeline-datetime">
+                                                <small class="text-muted">
+                                                    <i class="glyphicon glyphicon-time">
+                                                    </i>
+                                                    <span class="timeline-date">Yesterday</span>
+                                                    -
+                                                    <span class="timeline-time">3:09</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <a href="#">John Travolta</a> shared an image on <a href="#">Dribble</a>
+                                            <div class="tl-wide text-center" style="padding: 5px; margin-top:10px; margin-bottom: 10px;">
+                                                <img src="assets/img/temp1.png" alt="" style="max-height: 158px;max-width: 100%;">
+                                            </div>
+                                            <i class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</i>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-node">
+                                    <a class="btn btn-yellow">LOAD MORE</a>
+                                </li>
+                            </ul>
+                        </tab>
+                        <tab heading="Contacts" ng-click="getMap()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="profile-contacts">
+
+                                        <div class="profile-badge orange"><i class="fa fa-phone orange"></i><span>Contacts</span></div>
+                                        <div class="contact-info">
+                                            <p>
+                                                Mobile Phone	: {{user.mobile_phone}}<br>
+                                                Work Phone	: {{user.work_phone}}
+                                            </p>
+                                            <p>
+                                                Email		: {{user.email_id}}
+                                                <br>
+                                                Website		: {{user.website}}
+                                            </p>
+                                            <p ng-if="item">
+                                                <span ng-repeat="item in user.user_social_network">
+                                                    {{item.name}} :{{item.url}}
+                                                    <br>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="profile-badge azure">
+                                            <i class="fa fa-map-marker azure"></i><span>Location</span>
+                                        </div>
+                                        <div class="contact-info">
+                                            <p>
+                                                {{user.organization}}<br>
+                                                {{user.address}}<br>
+                                                {{user.city}} {{user.state && ", " + user.state|| ""}}<br>
+                                                {{user.country_code}}{{user.zip && "-" + user.zip|| ""}}
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="contact-map" map-div class="animated flipInY" ng-if="mapLoad"></div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Settings" active="isActive">
+                            <div class="alert alert-danger" ng-show="errorMsg">
+                                <div><span>{{errorMsg}}</span></div>
+                            </div>
+                            <div class="alert alert-success" ng-show="successMsg">
+                                <div><span>{{successMsg}}</span></div>
+                            </div>
+                            <form name="edituserforms" ng-submit="updateUser()" role="form" novalidate>
+
+                                <tabset justified="true">
+                                    <tab heading="Login Information">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.email.$invalid && !edituserforms.email.$pristine }">
+                                                    <label for="email">Email <i class="glyphicon glyphicon-question-sign" tooltip="Email Address" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="email" name="email" class="form-control" required  ng-model="user.email_id"  placeholder="someone@somewhere.com" />
+                                                        <i class="glyphicon glyphicon-envelope themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.password.$invalid && !edituserforms.password.$pristine }">
+                                                    <label for="password">Password <i class="glyphicon glyphicon-question-sign" tooltip="Minimum 8 characters. Upper & lowercase letters, numerical and symbols (#/$@!*%...)" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="password" name="password" class="form-control" id="passwd" ng-model="user.passwd" ng-minlength="8" />
+                                                        <i class="glyphicon glyphicon-lock themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.cpassword.$invalid && !edituserforms.cpassword.$pristine }">
+                                                    <label for="rpassword">Retype  Password <i class="glyphicon glyphicon-question-sign" tooltip="Must match password" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="password" name="cpassword"  class="form-control" ng-model="user.retype_passwd" pw-check="passwd" ng-minlength="8" />
+                                                        <i class="glyphicon glyphicon-lock themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" >
+                                                    <label >Role <i class="glyphicon glyphicon-question-sign" tooltip="Role" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <select class="form-control" placeholder="User Roles" ng-model="user.role" disabled="">     
+                                                            <option value="">Select Role</option>
+                                                            <option value="admin">Admin</option>
+                                                            <option value="reseller">Reseller</option>
+                                                            <option value="client">Client</option>
+                                                            <option value="user">User</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.username.$invalid && !edituserforms.username.$pristine }">
+                                                    <label for="exampleInputEmail2">Name <i class="glyphicon glyphicon-question-sign" tooltip="Full Name" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" required ng-model="user.admin_name" name="username" />
+                                                        <i class="glyphicon glyphicon-user themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="form-title">
+                                            Address Information
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group" >
+                                                    <label >Organization <i class="glyphicon glyphicon-question-sign" tooltip="Organization" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" ng-model="user.organization"  />
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.address.$invalid && !edituserforms.address.$pristine }">
+                                                    <label for="exampleInputEmail2">Address <i class="glyphicon glyphicon-question-sign" tooltip="Address" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control"  ng-model="user.address" name="address"  />
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.city.$invalid && !edituserforms.city.$pristine }">
+                                                    <label for="exampleInputEmail2">City/Province <i class="glyphicon glyphicon-question-sign" tooltip="City/Province" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control"  ng-model="user.city" name="city" />
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.state.$invalid && !edituserforms.state.$pristine }">
+                                                    <label >State <i class="glyphicon glyphicon-question-sign" tooltip="State" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control"  ng-model="user.state" name="state" data-mask="aa" />
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Zip Code <i class="glyphicon glyphicon-question-sign" tooltip="Zip" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" ng-model="user.zip"  />
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.country.$invalid && !edituserforms.country.$pristine }">
+                                                    <label for="exampleInputEmail2">Country <i class="glyphicon glyphicon-question-sign" tooltip="Country" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <select class="form-control" name="country" ng-model="user.country_code"
+                                                                ng-options="item.code as item.name for item in countries" >
+                                                            <option value="">Select</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+<!--                                        <div class="row">
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" >
+                                                    <label >IP Address <i class="glyphicon glyphicon-question-sign" tooltip="IP Address" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" ng-model="user.ip_address" />
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">SquibKey ID <i class="glyphicon glyphicon-question-sign" tooltip="SquibKey ID" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" ng-model="user.squibkey_id"  />
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </tab>
+                                    <tab heading="Personal Information">
+
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Sex <i class="glyphicon glyphicon-question-sign" tooltip="Sex" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <select class="form-control" placeholder="User Roles" ng-model="user.sex">
+                                                            <option value="">Select</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.dob.$invalid && !edituserforms.dob.$pristine }">
+                                                    <label >DOB <i class="glyphicon glyphicon-question-sign" tooltip="Age" tooltip-placement="top"></i></label>
+                                                    <p class="input-group">
+                                                        <input type="text" name="dob" class="form-control" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened"  max-date="'maxDate'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.mobile_phone.$invalid && !edituserforms.mobile_phone.$pristine }">
+                                                    <label >Mobile Phone <i class="glyphicon glyphicon-question-sign" tooltip="Mobile Phone" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" name="mobile_phone" class="form-control"  ng-model="user.mobile_phone" ui-mask="(999) 999 9999"  ui-mask-placeholder ui-mask-placeholder-char="_" />
+                                                        <i class="glyphicon glyphicon-phone themeprimary"></i>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.work_phone.$invalid && !edituserforms.work_phone.$pristine }">
+                                                    <label >Work Phone <i class="glyphicon glyphicon-question-sign" tooltip="Work Phone" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" name="work_phone"  ng-model="user.work_phone" ui-mask="(999) 999 9999"  ui-mask-placeholder ui-mask-placeholder-char="_" />
+                                                        <i class="glyphicon glyphicon-phone-alt themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.website.$invalid && !edituserforms.website.$pristine }">
+                                                    <label for="exampleInputEmail2">Website <i class="glyphicon glyphicon-question-sign" tooltip="Website" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="url" class="form-control" name="website" ng-model="user.website"  />
+                                                        <i class="glyphicon glyphicon-globe themeprimary"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div class="form-group" ng-class="{ 'has-error' : edituserforms.about_me.$invalid && !edituserforms.about_me.$pristine }">
+                                                    <label >About Me <i class="glyphicon glyphicon-question-sign" tooltip="About me" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <textarea class="form-control" id="textareaanimated"  ng-maxlength="160" name="about_me" ng-model="user.about_me" placeholder="Write Something about your skill and interest" ui-jq="autosize" ui-options="{ append: '\n' }"></textarea>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-title">
+                                                Instance Information
+                                            </div>
+                                            <div class="row" ng-if="user_permissions[4].status">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group" >
+                                                        <label for="exampleInputEmail2">SQuibCard <i class="glyphicon glyphicon-question-sign" tooltip="ON/OFF SQuibCard" tooltip-placement="top"></i></label>
+                                                        <span class="input-icon icon-right">
+                                                            <input type="checkbox" ng-class='settings.skin ? "colored-primary" : "colored-blue"' class="checkbox-slider toggle " ng-model="user.squibcard">
+                                                            <span class="text">&nbsp;</span>
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-if='user.squibcard'>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group" ng-class="{ 'has-error' : edituserforms.instance_name.$invalid && !edituserforms.instance_name.$pristine }">
+                                                        <label for="exampleInputEmail2">Domain Name <i class="glyphicon glyphicon-question-sign" tooltip="Example: Personal or organization name here." tooltip-placement="top"></i></label>
+                                                        <span class="input-icon icon-right">
+                                                            <input type="text" class="form-control" name="instance_name" ng-model="user.instance_name" placeholder="Instance Name" required ng-change="instanceUrl()">
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-4" ng-if="user_permissions[8].status">
+                                                    <div class="form-group" ng-class="{ 'has-error' : edituserforms.url_type.$invalid && !edituserforms.url_type.$pristine }">
+                                                        <label for="exampleInputEmail2">URL Type <i class="glyphicon glyphicon-question-sign" tooltip='Select "Default" for personal domain, ie., http://john.squibdrive.com. Select Custom for Vanity Domain i.e., www.mysite.com.' tooltip-placement="top"></i></label>
+                                                        <span class="input-icon icon-right">
+                                                            <select class="form-control" name="url_type" required ng-model="user.url_type" ng-change="instanceUrl()">
+                                                                <option value="">Select Type</option>
+                                                                <option value="0">Default</option>
+                                                                <option value="1">Custom</option>
+                                                            </select>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4" ng-if="user_permissions[8].status">
+                                                    <div class="form-group" ng-class="{ 'has-error' : edituserforms.instance_url.$invalid && !edituserforms.instance_url.$pristine }">
+                                                        <label for="exampleInputName2">Vanity URL <i class="glyphicon glyphicon-question-sign" tooltip="Enter your domain here (mydomain.com). Purchase from any registrar like Godaddy then set the DNS to dns3.squibdrive.com and dns4.squibdrive.com." tooltip-placement="top"></i></label>
+                                                        <span class="input-icon icon-right">
+                                                            <input ng-readonly="user.url_type == '0'" type="url" name="instance_url" class="form-control" ng-model="user.instance_url" placeholder="Instance URL" required>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4" ng-if="!user_permissions[8].status">
+                                                    <div class="form-group" ng-class="{ 'has-error' : edituserforms.instance_url.$invalid && !edituserforms.instance_url.$pristine }">
+                                                        <label for="exampleInputName2">Default URL <i class="glyphicon glyphicon-question-sign" tooltip="Enter your domain here (mydomain.com). Purchase from any registrar like Godaddy then set the DNS to dns3.squibdrive.com and dns4.squibdrive.com." tooltip-placement="top"></i></label>
+                                                        <span class="input-icon icon-right">
+                                                            <input ng-readonly="true" type="url" name="instance_url" class="form-control" ng-model="user.default_url" placeholder="Instance URL" required>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tab>
+                                    <tab heading="SquibCard Templates" ng-if="user.squibcard">
+
+                                        <div class="row" >
+                                            <div class="col-sm-4" ng-repeat="thumb in thumbnails">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">
+                                                        <img alt="Avatar"  class="social-avatar" ng-src="assets/img/squibcards/{{thumb.thumbnail}}">
+                                                    </label>
+                                                    <span class="input-icon icon-right">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" class="colored-primary" name="form-field-radio" ng-model="user.squibcard_id" value="{{thumb.id}}">
+                                                                <span class="text"> {{thumb.name}}</span>
+                                                            </label>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="user.squibcard_id == '1'" >
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="sitelogo">Cover Photo</label>
+                                                    <span class="input-icon icon-right">
+                                                        <div class="img-upload-sec" >
+                                                            <div class="thumbnail bg-themeprimary" style="width:200px;">
+
+                                                                <img ng-show="user.cover"  ngf-src="user.cover" />
+                                                                <img  ng-show='!user.cover && !user.cover_photo' src="assets/img/img-1.jpg" />
+                                                                <img ng-show='!user.cover && user.cover_photo' src="{{user.cover_photo}}" />
+                                                            </div>
+
+                                                            <div class='section-btn'>
+
+                                                                <p class='support-file'>
+                                                                    Only PNG, GIF, JPG files allowed.
+                                                                    <span ng-show="cover_photo" class="text-success"><br/>You must confirm this image using save button below</span> 
+
+                                                                </p>
+                                                                <button class="btn btn-primary shiny" type="button"  ngf-select ng-model="user.cover" name="cover_photo" ngf-pattern="'image/*'"
+                                                                        ngf-accept="'image/*'" ngf-max-size="2MB" ngf-min-width="500" ngf-resize="{width: 500, quality: 1.0}">Upload Photo</button>
+
+                                                                <span class="errors red" ng-show="edituserforms.cover_photo.$error.minHeight || edituserforms.cover_photo.$error.minWidth">Min cover photo width is 500 in pixels</span>
+                                                                <span class="errors red" ng-show="edituserforms.cover_photo.$error.maxSize">File too large {{user.cover.size / 1000000|number:1}}MB: max 2M</span>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-if="user.squibcard_id == '3' && user.squib_movie" >
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Video From <i class="glyphicon glyphicon-question-sign" tooltip="Enter source of video YouTube/Vimeo/SnapChat or vine" tooltip-placement="top"></i></label>
+                                                </div>  
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+
+                                                    <span class="input-icon icon-right">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" class="colored-primary" name="video_from" ng-model="user.video_from" value="1">
+                                                                <span class="text">Youtube</span>
+                                                            </label>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+
+                                                    <span class="input-icon icon-right">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" class="colored-primary" name="video_from" ng-model="user.video_from" value="2">
+                                                                <span class="text">Vimeo</span>
+                                                            </label>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="user.squibcard_id == '3' && user.squib_movie">
+
+
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Video Code <i class="glyphicon glyphicon-question-sign" tooltip="Enter your iframe code for video on YouTube/Vimeo/SnapChat or vine" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <textarea class="form-control" required   ng-model="user.video_code" placeholder="Video Code" ui-jq="autosize" ui-options="{ append: '\n' }"></textarea>
+                                                    </span>
+                                                    <div class="codeblock">
+                                                        For Example: https://www.youtube.com/watch?v=0WWzgGyAH6Y
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>       
+                                    </tab>
+                                    <tab heading="Social Networks">
+                                        <div class="row" ng-repeat="item in user.user_social_network">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Social Network <i class="glyphicon glyphicon-question-sign" tooltip="Social Network" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <select class="form-control" name="country_code" ng-model="item.social_network_id"
+                                                                ng-options="item.id as item.name for item in social_networks" >
+                                                            <option value="">Select</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">URL <i class="glyphicon glyphicon-question-sign" tooltip="URL" tooltip-placement="top"></i></label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="url" class="form-control" ng-model="item.url"  />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 Right" >
+                                                <div class="form-group">
+                                                    <label for="sd">&nbsp;</label>
+                                                    <span class="input-icon icon-right">
+                                                        <a ng-if="$index == (user.user_social_network.length - 1)" href="javascript:void(0);" ng-click="add_network()" class="btn btn-default btn-lg"><i class="fa fa-plus"></i> Add</a>
+                                                        <a ng-if="$index != (user.user_social_network.length - 1)" href="javascript:void(0);" ng-click="del_network($index)" class="btn btn-default btn-lg"><i class="fa fa-times"></i> Delete</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tab>
+                                </tabset>
+
+                                <button type="submit" class="btn btn-success" ng-disabled="edituserforms.$invalid">Save</button>
+                                <!--<button type="button" class="btn btn-azure" ng-click="updateDetails()">Update</button>-->
+                                <button type="reset" class="btn btn-warning" >Reset</button>
+                                <!--<input type="hidden" id="id_hid"/>-->
+                            </form>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<!--Page Related Scripts-->
+

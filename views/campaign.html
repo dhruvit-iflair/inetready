@@ -1,0 +1,126 @@
+
+<div style="max-width:450px;margin:20px auto" ng-controller="CampaignCtrl" class="login-container animated fadeInDown">
+    <iframe id="MainPopupIframe" ng-if='iframe_data' ng-src='{{iframeURL}}' width="0" height="0" frameborder="0"></iframe>
+    <!-- EMAIL CONFIRMATION -->
+    <div class="the-box no-border full full-width">
+        <div ng-if='iframe_data' class="logo" style="background-color: rgb(45, 195, 232); text-align: center">
+            <img ng-src="{{branding.logo?branding.logo:'assets/img/logoX200.png'}}"  />
+            <!--<img alt="" src="assets/img/logoX200.png">-->
+        </div>
+    <!-- LOADER -->
+        <div class="the-box-inner relative" style="border:0px">
+            <div ng-if="loading">
+                {{loading_text}}
+
+                <div class="progress-striped active progress ng-isolate-scope">
+                    <div class="progress-bar progress-bar-info" aria-valuetext="20%" ng-style="{width: percent + '%'}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div ng-show="errorMsg" class="alert alert-danger ng-hide" style="">
+                <div><span class="ng-binding" dynamic="errorMsg" ></span></div>
+            </div>
+            <div ng-show="successMsg" class="alert alert-success ng-hide" style="">
+                <div><span class="ng-binding" ng-bind-html="convertHtml(successMsg)"></span></div>
+            </div>
+        </div> 
+ 
+        <div class="the-box-inner relative widget flat" ng-if="show" >
+            <div class="widget-header bordered-bottom bordered-pink">
+                <span class="widget-caption">Email Confirmation</span>
+            </div>
+
+            <div class="widget-body no-border">
+                <div id="horizontal-form">
+                    <form novalidate="" role="form" ng-submit="signup()" name="addVisitor" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" name="full_name" placeholder="Full Name" class="form-control" ng-model="data.full_name" required>
+                                <div class="horizontal-space"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="email" name="email_address" placeholder="Your Email" class="form-control" ng-model="data.email_address" required="">
+                                <div class="horizontal-space"></div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <button ng-disabled="addVisitor.$invalid" class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="the-box-inner relative widget flat" ng-if="showLogin" >
+            <div class="widget-header bordered-bottom bordered-pink">
+                <span class="widget-caption">Login</span>
+            </div>
+
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form novalidate="" role="form" ng-submit="login()" name="loginNow" class="form-horizontal">
+                      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="email" name="email_address" placeholder="Your Email" class="form-control" ng-model="data.email_address" required="">
+                                <div class="horizontal-space"></div>
+                            </div>
+
+                        </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                                <input type="password" class="form-control" placeholder="Password" required ng-model="data.password" />
+                                <div class="horizontal-space"></div>
+                            </div>
+                        </div>
+                         <a href="javascript:void(0);" ng-click="showOptin()">Not Registered?</a>
+                        <div class="horizontal-space"></div>
+                        <div>
+                            <button ng-disabled="loginNow.$invalid" class="btn btn-primary" type="submit">Login Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SQUIBKEY -->
+        <div class="the-box-inner relative" ng-if="showOriginal">
+            <div class="widget-header bordered-bottom bordered-pink">
+                <span class="widget-caption">Are you the original owner of Squibkey?</span>
+            </div>
+
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <div>
+                        <a class="btn btn-primary" ng-click="reply(1, '{{type}}')">Yes</a>
+                        <a class="btn btn-primary" ng-click="reply(0, '{{type}}')">No</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- OTF -->
+        <div class="the-box-inner relative" ng-if="showOTF">
+            <div class="widget-header bordered-bottom bordered-pink">
+                <span class="widget-caption">Are you New or are you Returning?</span>
+            </div>
+
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <div>
+                        <a class="btn btn-primary" ng-click="reply(0, '{{type}}')">New</a>
+                        <a class="btn btn-primary" ng-click="reply(1, '{{type}}')">Returned Existing User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+    </div>
+
+</div>

@@ -1,0 +1,105 @@
+<div class="row" ng-controller="CloudSettingsCtrl">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+          
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="widget flat radius-bordered">
+                            <div class="widget-header bg-blue">
+                                <span class="widget-caption">Update Cloud Settings</span>
+                            </div>
+                            <div  ng-show="errorMsg" role="alert" style="color:red;text-align:center;">{{errorMsg}}
+                
+                            </div>
+                            <div class="widget-body">
+                                <div id="registration-form"  ng-repeat="x in clouddetails">
+                                    <form role="form" >
+                                       
+                                        <div class="form-group">
+                                            <span class="input-icon icon-right">
+                                                <label>Maximum Simultaneous File Upload</label>
+                                                <input type="text" class="form-control" id="max_simul_file_upload" placeholder="Maximum Simultaneous File Upload" required  value="{{x.max_simul_file_upload}}">  
+                                                <i class="glyphicon glyphicon-user circular"></i>
+                                            </span>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="input-icon icon-right">
+                                                <label>Maximum File Size</label>
+                                                <input type="text" class="form-control" id="max_file_size" placeholder="Maximum File Size" value="{{x.max_file_size}}">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="input-icon icon-right">
+                                                <label>Allowed Types</label>
+                                                <input type="text" class="form-control" id="allowed_types" placeholder="Allowed Types" value="{{x.allowed_types}}">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="input-icon icon-right">
+                                                <label>Excluded Types</label>
+                                                <input type="text" class="form-control" id="excluded_types" placeholder="Excluded Types" value="{{x.excluded_types}}">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                        </div>                                     
+                                        
+                                        <div><br /></div>                          
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                                <label>Preview Extension</label>
+                                                <select id="preview_extensions"  placeholder="Preview Extension">
+                                                    <option>Preview Extension</option>
+                                                    <option value="1" ng-selected="{{x.preview_extensions==1}}">Yes</option>
+                                                    <option value="0" ng-selected="{{x.preview_extensions==0}}">No</option>
+                                                </select>
+                                            </div> 
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Default Limit Size (In MB)</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input class="form-control date-picker" id="default_limit_size"  type="text" value="{{x.default_limit_size}}">
+                                                        <i class="fa fa-globe"></i>                               
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                                <label style="width: 100%;">Limit Unit</label>
+                                                <select id="limit_unit"  placeholder="Limit Unit" >
+                                                    <option>Limit Unit</option>
+                                                    <option value="0" label="GB" ng-selected="{{x.limit_unit==0}}">GB</option>
+                                                    <option value="1" label="MB" ng-selected="{{x.limit_unit==1}}">MB</option>
+                                                    <option value="2" label="TB" ng-selected="{{x.limit_unit==2}}">TB</option>
+                                                </select>
+                                            </div>
+                                             
+                                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                                <label>Date Format</label>
+                                                <select id="date_format"  placeholder="Date Format">
+                                                    <option>Date Format</option>
+                                                    <option value="0" label="dd-MMMM-yyyy" ng-selected="{{x.date_format==0}}">dd-MMMM-yyyy</option>
+                                                    <option value="1" label="yyyy/MM/dd" ng-selected="{{x.date_format==1}}">yyyy/MM/dd</option>
+                                                    <option value="2" label="dd.MM.yyyy" ng-selected="{{x.date_format==2}}">dd.MM.yyyy</option>
+                                                    <option value="3" label="shortDate" ng-selected="{{x.date_format==3}}">shortDate</option>
+                                                </select>
+                                            </div> 
+                                            
+                                        </div> 
+                                        <div><br /></div>
+                                        <button type="button" class="btn btn-blue" ng-click="updatecloudDetails()">Update</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

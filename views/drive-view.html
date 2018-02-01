@@ -1,0 +1,259 @@
+<div class="box_outer clearfix" ng-controller="DriveCtrl">
+    <div class="box_lt clearfix" >
+        <div class="top_hdr clearfix">
+            <a class="logo pull-left" href="/">
+                <img height="40px" ng-src="{{site_preferences.logo?site_preferences.logo:'assets/img/logoX200.png'}}"  />
+            </a>
+            <button type="button" class="btn custom_btn btn-success ps1" ng-click='download_file()'>Download</button>
+            <div class="user_info clearfix">
+                <div class="user_img">
+                    <img ng-show='globals.currentUser.profile_image' ng-src="{{globals.currentUser.profile_image?globals.currentUser.profile_image:'assets/img/avatars/default_user.png'}}" />
+                </div>
+                <div class="user_name">{{globals.currentUser.username}} </div>
+                <!--<a class="arw_btn" href="#"><i class="fa fa-caret-down"></i></a>-->
+            </div>
+        </div>
+        <div class="mid_box">
+            <div class="mid_box_inr1" >
+                <div class="mid_box_inr2">
+                    <div class="mid_box_inr3"  ng-repeat="photo in drive_files| orderBy:'reduced_name':reverse"  ng-if="current_index == $index" ng-switch="photo.file_type_no">
+                        <!--MP4-->
+                        <div class="video_box" ng-switch-when="1">
+                            <div id="video" html5-fallback-video                       
+                                 mp4-url="{{photo.view_path}}" video-width="100%"   video-height="100%">
+                            </div>
+                        </div>
+
+                        <!--MP3-->
+                        <div class="audio_box" ng-switch-when="2">
+                            <audio class="audCls" controls id="audio_pause_id1">
+                                <source ng-src="{{photo.view_path}}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <!--PDF/TEXT-->
+                        <div ng-switch-when="3" class="pdf_box" ng-class="{'pdf-file-sec' : photo.file_type === 'pdf'}">
+                            <iframe scrolling="yes" ng-src="{{$sce.trustAsResourceUrl(photo.view_path)}}" frameborder="0" class="slide" id="img_pdf2"></iframe>
+                        </div>
+
+                        <!--Image-->
+                        <img ng-switch-when="4" ng-swipe-right="changeSlide($index - 1)" ng-swipe-left="changeSlide($index + 1)" ng-src="{{photo.view_path}}" id="img_jpg2" />
+
+                        <!--Other Types-->
+                        <div ng-switch-default class="file_box">
+                            <img  ng-swipe-right="changeSlide($index - 1)" ng-swipe-left="changeSlide($index + 1)" ng-src="{{photo.img_path}}"  id="img_other2" />
+                            <label id="img_other_label2">No File Preview is Available.</label>
+                        </div>
+
+                        <a class="arrow prev" ng-if="$index > 0" href="javascript:void(0)" ng-click="changeSlide($index - 1)"></a>
+                        <a class="arrow next" ng-if="$index < (drive_files.length - 1)" href="javascript:void(0)" ng-click="changeSlide($index + 1)" ></a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="btm_ftr clearfix">
+            <div class="folder_box"><i class="fa fa-{{type}}"></i> {{item_name}}</div>
+        </div>
+    </div>
+    <div class="box_rt clearfix">
+
+        <div class="login-container animated fadeInDown" style="max-width:450px;margin:20px auto">
+            <div class="">
+                <!-- SOCIAL LINK CARD -->
+                <div class="the-box no-border full full-width" ng-if="user.squibcard_id == '1'">
+                    <div class="the-box-inner relative" >
+                        <div class="right-action" ng-if="!globals.currentUser.user_id">
+                            <button  ng-click='check_login()' class="btn btn-success btn-square btn-xs">Login</button>
+                        </div>
+                        <!-- /.right-action --> 
+                        <img alt="Image" class="img-responsive" src="assets/img/img-1.jpg">
+                        <div class="the-box no-border text-center user-info marB0"> 
+                            <img alt="Avatar" class="social-avatar img-circle absolute has-white-shadow" ng-show='user.profile_image' ng-src="{{user.profile_image?user.profile_image:'assets/img/avatars/default_user.png'}}" />
+                            <h4 ng-click="seeLocation()">{{user.admin_name}}</h4>
+                            <p class="bordered text-muted">{{user.organization}}</p>
+                            <p class="social-icon">
+                                <a ng-if="user.website" target="_blank" href="{{user.website}}">
+                                    <i  class="fa fa-globe  icon-xs icon-circle icon-globe"></i>
+                                </a>
+                                <a target="_blank" ng-repeat="link in user.user_social_network" href="{{link.url}}">
+                                    <i ng-show="link.fa == '1'" class="fa fa-{{link.class_name}}  icon-xs icon-circle icon-{{link.class_name}}"></i>
+                                    <i ng-show="link.fa == '0'" class="icon-img icon-{{link.class_name}}"></i>
+                                </a>
+                                <a target="_blank" href="javascript:void(0)">
+                                    <i  class="fa fa-share-alt  icon-xs icon-circle icon-share"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <!-- /.the-box .no-border .no-margin --> 
+                    </div>
+                </div>
+
+
+                <!-- SOCIAL INFLUENCE CARD --> 
+
+                <div class="the-box no-border full card-info full-width" ng-if="user.squibcard_id == '2'">
+                    <div class="the-box-inner relative">
+                        <div class="right-action" ng-if="!globals.currentUser.user_id">
+                            <button  ng-click='check_login()' class="btn btn-success btn-square btn-xs">Login</button>
+                        </div>
+                        <div class="the-box no-border text-center no-margin">
+
+                            <!-- /.right-action -->
+                            <h4 class="bolded">{{user.admin_name}}</h4>
+                            <img alt="Avatar" class="social-avatar has-margin has-light-shadow img-circle" ng-show='user.profile_image' ng-src="{{user.profile_image?user.profile_image:'assets/img/avatars/default_user.png'}}" />
+                            <p class="text-info">{{user.email_id}}</p>
+                            <p class="text-muted">{{user.organization}}</p>
+                            <p class="bordered" ng-click="seeLocation()"><i class="fa fa-map-marker"></i> <strong>{{user.city}}, {{user.state}}</strong></p>
+                            <p class="text-muted"> {{user.about_me}}</p>
+                            <a href="{{user.website}}" target="_blank" class="text-success">{{user.website}}</a>
+                            <p class="social-icon">
+                                <a ng-if="user.website" target="_blank" href="{{user.website}}">
+                                    <i  class="fa fa-globe  icon-xs icon-circle icon-globe"></i>
+                                </a>
+                                <a target="_blank" ng-repeat="link in user.user_social_network" href="{{link.url}}">
+                                    <i ng-show="link.fa == '1'" class="fa fa-{{link.class_name}}  icon-xs icon-circle icon-{{link.class_name}}"></i>
+                                    <i ng-show="link.fa == '0'" class="icon-img icon-{{link.class_name}}"></i>
+                                </a>
+                                <a target="_blank" href="javascript:void(0)">
+                                    <i  class="fa fa-share-alt  icon-xs icon-circle icon-share"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <!-- /.the-box .no-border .bg-info .no-margin -->
+                        <button class="btn btn-success btn-block btn-lg btn-square"><i class="fa fa-user"></i> {{followTxt}}</button>
+                    </div>
+
+
+                </div>
+
+
+                <!-- SOCIAL MOVIE CARD -->
+
+                <div class="the-box no-border full full-width text-center" ng-show="user.squibcard_id == '3'">
+
+                    <div class="the-box-inner relative">
+
+                        <div class="right-action" ng-if="!globals.currentUser.user_id">
+                            <button  ng-click='check_login()' class="btn btn-success btn-square btn-xs">Login</button>
+                        </div>
+                        <div class="the-box-inner no-border ">
+
+                            <div class="row">
+
+                                <div class="col-lg-6 col-sm-12">
+                                    <h4 class="bolded">{{user.admin_name}}</h4>
+                                    <img alt="Avatar" class="social-avatar has-margin has-light-shadow img-circle" ng-show='user.profile_image' ng-src="{{user.profile_image?user.profile_image:'assets/img/avatars/default_user.png'}}" />
+
+                                    <p class="text-muted">{{user.organization}}</p>
+                                    <button class="btn btn-success btn-block btn-md btn-square" ng-click="influenceMe()"><i class="fa fa-user"></i> Influence Me</button>
+                                </div>
+                                <div  ng-if="chart_data" class="col-lg-6 col-sm-12 fadeIn fadeOut" >
+                                    <div id="donut-chart" chart-div class="chart chart-xs" style="height: 161px"></div>
+                                    <!--<div id="donut-chart" class="chart chart-xs" style="height: 161px">
+                        
+                                        <img src="assets/img/donutchart.png" class="social-avatar has-margin has-light-shadow img-circle" alt="Avatar">
+                                    </div>-->
+                                    <button ng-click="seeLocation()" class="btn btn-blue btn-block btn-md btn-square"><i class="fa fa-envelope"></i> Message</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p class="social-icon">
+                                    <a ng-if="user.website" target="_blank" href="{{user.website}}">
+                                        <i  class="fa fa-globe  icon-xs icon-circle icon-globe"></i>
+                                    </a>
+                                    <a target="_blank" ng-repeat="link in user.user_social_network" href="{{link.url}}">
+                                        <i ng-show="link.fa == '1'" class="fa fa-{{link.class_name}}  icon-xs icon-circle icon-{{link.class_name}}"></i>
+                                        <i ng-show="link.fa == '0'" class="icon-img icon-{{link.class_name}}"></i>
+                                    </a>
+                                    <a ng-click="shareEmail()" href="javascript:void(0)">
+                                        <i  class="fa fa-share-alt  icon-xs icon-circle icon-share"></i>
+                                    </a>
+                                </p>
+                                <div class="col-sm-12">
+                                    <div class="video-wrapper" ng-bind-html="convertHtml(user.video_iframe)" style="width: 100%;">
+                                        <!--<iframe src="https://player.vimeo.com/video/158344086?title=0&byline=0&portrait=0&badge=0" style=" width:100%;" height="230" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+                                    </div>
+                                    <!-- BEGIN FOOTER TIMELINE -->
+                                    <div class="footer-timeline">
+                                        <ul class="timeline-option">
+                                            <li class="option-row">
+                                                <div class="row">
+                                                    <div class="col-xs-7 text-left">
+                                                        <ol>
+                                                            <li><a href="javascript:void(0);" ng-click="likeDislike(1)" >Like</a></li>
+                                                            <li><a href="javascript:void(0);" ng-click="likeDislike(0)">Dislike</a></li>
+                                                            <li><a href="javascript:void(0);">Rating/Comment</a></li>
+                                                        </ol>
+                                                    </div>
+                                                    <!-- /.col-xs-6 -->
+                                                    <div class="col-xs-5 text-right">
+                                                        <ol>
+                                                            <li><i class="fa fa-thumbs-o-up green_round"></i> {{user.likes}}</li>
+                                                            <li><i class="fa fa-thumbs-o-down red_round"></i> {{user.dislikes}}</li>
+                                                            <li><i class="fa fa-comments"></i> {{user.comments.length}}</li>
+                                                        </ol>
+                                                    </div>
+                                                    <!-- /.col-xs-6 --> 
+                                                </div>
+                                                <!-- /.row --> 
+                                            </li>
+                                            <li class="option-row text-left"><strong>ADD YOUR RATING</strong></li>
+                                            <li class="option-row"> 
+                                                <img ng-src="{{globals.currentUser.profile_image?globals.currentUser.profile_image:'assets/img/avatars/default_user.png'}}" class="avatar">
+                                                <div class="reply">
+                                                    <form role="form" name="commentForm" ng-submit="addComment()" novalidate="">
+                                                        <input type="text" class="form-control input-sm" placeholder="Write your comment..." name="comment" required ng-maxlength="160" ng-model="usercomment.comment">
+                                                    </form>
+                                                </div>
+                                                <!-- /.reply --> 
+                                            </li>
+
+                                            <li> 
+                                                <div class="chatbar-contacts">
+
+                                                    <ul class="contacts-list" style="padding-left: 0">
+                                                        <li class="option-row" ng-repeat="comment in user.comments" on-finish-render-comment>
+                                                            <img ng-src="{{comment.profile_image?comment.profile_image:'assets/img/avatars/default_user.png'}}" class="avatar">
+                                                            <div class="reply text-left">
+                                                                <p><strong><a href="javascript:void(0);">{{comment.name}}</a></strong> {{comment.comment}}</p>
+                                                                <p class="text-muted reply-time">{{comment.time}}</p>
+                                                            </div> 
+                                                            <span class="sc_come_del fa fa-trash-o" ng-if="globals.currentUser.user_id && globals.currentUser.user_id == comment.user_id" ng-click="deleteComment($index, comment.id)"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!--                                        <ul class="contacts-list">
+                                                                                            <li class="option-row" ng-repeat="comment in user.comments"> 
+                                                                                                <img ng-src="{{comment.profile_image?comment.profile_image:'assets/img/avatars/default_user.png'}}" class="avatar">
+                                                                                                <div class="reply text-left">
+                                                                                                    <p><strong><a href="javascript:void(0);">{{comment.name}}</a></strong> {{comment.comment}}</p>
+                                                                                                    <p class="text-muted reply-time">{{comment.time}}</p>
+                                                                                                </div> 
+                                                                                            </li>
+                                                                                        </ul>-->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- /.footer-timeline --> 
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div> 
+
+

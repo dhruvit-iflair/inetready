@@ -1,0 +1,47 @@
+
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal"  ng-click="FollowPopupClose()" class="close" type="button">×</button>
+    <h4 class="modal-title">Share SquibCard </h4>
+</div>
+<div class="modal-body">
+
+    <div class="loginbox-social">
+        <div class="social-title ">Share with Your Social Accounts</div>
+        <div class="social-buttons">
+            <ul>
+                <li style="border-bottom: none; border-right:none;">
+                    <a href="javascript:void(0);" class="button-primary follow" ng-click="follow()">
+                        {{followTxt}}
+                    </a>
+                </li>
+                <li style="border-bottom: none">
+                    <a class="facebook" href="https://facebook.com/sharer/sharer.php?u={{share.url}}" onclick="window.open(this.href, 'facebookwindow', 'left=20,top=20,width=600,height=700,toolbar=0,resizable=1');
+                            return false;">   <i class="social-icon fa fa-facebook"></i>   <p>Facebook</p></a>
+
+                </li>
+                <li style="border-right:none;">
+                    <a class="twitter" href="http://twitter.com/intent/tweet?text={{share.tw_text}}&url={{share.url}}" onclick="window.open(this.href, 'twitterwindow', 'left=20,top=20,width=600,height=300,toolbar=0,resizable=1');
+                            return false;">   <i class="social-icon fa fa-twitter"></i>
+                        <p>Twitter</p>
+
+                    </a>
+                </li>
+                <li>
+                    <a class="gplus" href="https://plus.google.com/share?url={{share.url}}" onclick="window.open(this.href, 'twitterwindow', 'left=20,top=20,width=600,height=300,toolbar=0,resizable=1');
+                            return false;">   <i class="social-icon fa fa-google-plus"></i>
+                        <p>Google+</p>
+
+                    </a>
+                </li>
+            </ul>
+            <div style="clear: both;"></div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+

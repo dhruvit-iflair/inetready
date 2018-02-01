@@ -1,0 +1,100 @@
+<style>
+    input.ng-invalid {
+        border: 1px solid red;
+    }
+
+    input.ng-valid {
+        border: 1px solid green;
+    }
+</style>
+
+<div class="row" ng-controller="UserslistCtrl">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Users List</span>
+                <div class="widget-buttons">
+                    <a href="" widget-maximize></a>
+                    <a href="" widget-collapse></a>
+                    <a href="" widget-dispose></a>
+                </div>
+            </div>
+            <div class="widget-body" >
+                <table id="expandabledatatable" ui-options="simpleTableOptions" class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th ></th>
+                            <th >Name</th>
+                            <!--<th >Email</th>-->
+                            <th>Role</th>
+                            <th >Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="row" ng-controller="UserslistCtrl">
+  ui-jq="dataTable"
+    
+    <div class="col-xs-12 col-md-12">
+        <div class="well with-header  with-footer">
+            <div class="header">
+                Users List
+            </div>
+            <div  ng-show="errorMsg" role="alert" style="color:red;text-align:center;">{{errorMsg}}
+
+            </div>
+            <table  class="table table-striped table-bordered table-hover">
+                <thead class="bordered-darkorange">
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in names">
+                        <td>
+                            {{ $index + 1}}
+                        </td>
+                        <td>
+                            {{ x.Name}}
+                        </td>
+                        <td>
+                            {{ x.Emailid}}
+                        </td>
+                        <td>
+                            {{ x.Role}}
+                        </td>
+                        <td>
+                            {{ x.Status}}
+                        </td>
+                        <td>
+                            <a ui-sref="app.edituserdetails({user_id: {{x.Adminid}}})"  class="btn btn-default btn-xs purple" ng-click="editDetails(x.Adminid, $index)"><i class="fa fa-edit"></i> </a>
+                            <a href="#/app/manageusers" class="btn btn-default btn-xs black" ng-click="deleteDetails(x.Adminid, $index)"><i class="fa fa-trash-o"></i> </a>
+                        </td>
+                    </tr>                  
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</div>-->

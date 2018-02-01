@@ -1,0 +1,59 @@
+<!--<div style="max-width:450px;margin:20px auto" ng-controller="CampaignKeysGenerateCtrl" class="login-container animated fadeInDown">
+
+
+    <div class="the-box no-border full full-width">
+        <div class="logo" style="background-color: rgb(45, 195, 232); text-align: center">
+            <img width="180" alt="" src="assets/img/logo.png">
+        </div>
+
+         LOADER 
+        <div class="the-box-inner relative" style="border:0px">
+            <div ng-if="loading">
+                Please wait while page loads...
+                <div class="progress-striped active progress ng-isolate-scope">
+                    <div class="progress-bar progress-bar-info" aria-valuetext="20%" ng-style="{width: percent + '%'}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div ng-show="errorMsg" class="alert alert-danger ng-hide" style="">
+                <div><span class="ng-binding">{{errorMsg}}</span></div>
+            </div>
+            <div ng-show="successMsg" class="alert alert-success ng-hide" style="">
+                <div><span class="ng-binding">{{successMsg}}</span></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>-->
+
+    <div class="modal modal-message modal-info fade in"  ng-controller="CampaignKeysGenerateCtrl" style="display: block; padding-right: 17px;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-blue">
+                    <img  width="180" ng-src="{{branding.logo?branding.logo:'assets/img/logoX200.png'}}"  />
+                </div>
+                <!--<div class="modal-title">Campaign Keys</div>-->
+                <div class="modal-body">
+                    <div ng-show="errorMsg" class="alert alert-danger ng-hide" style="">
+                        <div><span class="ng-binding">{{errorMsg}}</span></div>
+                    </div>
+                    <div ng-show="successMsg" class="alert alert-success ng-hide" style="">
+                        <div><span class="ng-binding">{{successMsg}}</span></div>
+                    </div>
+                    <div ng-if="loading">
+                        <p>
+                              Please wait while page loads...
+                        </p>
+                      
+                        <div class="progress-striped active progress ng-isolate-scope">
+                            <div class="progress-bar progress-bar-info" aria-valuetext="20%" ng-style="{width: percent + '%'}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" ui-sref="app.dashboard" class="btn btn-info btn-blue" data-dismiss="modal">OK</button>-->
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>

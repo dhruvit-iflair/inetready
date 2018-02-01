@@ -1,0 +1,348 @@
+<style type="text/css">
+    .header-avatar {
+        background-clip: padding-box;
+        /*border: 5px solid #f5f5f5;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);*/
+        height: 70px;    
+        width: 60px;
+        cursor: pointer;
+        display: block;
+        margin: 10px auto auto;
+        vertical-align: middle;
+    }
+    .databox.databox-vertical.databox-xlg {
+        height: 100px;
+        width: 80%;
+    }
+    .label_cld {
+
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 20px;
+        overflow: hidden;
+        height: 20px;
+    }
+    .my-drop-zone { border: dotted 3px lightgray; }
+    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+
+    .slide img{
+        /*max-height: 450px;
+        max-width: 700px;
+        width: 700px;
+        height: 450px;*/
+        vertical-align: middle;
+
+    }
+    .img_outer_div{
+        width: 100%;
+        height: 80vh;
+        vertical-align: middle; 
+    }  
+    .img_outer_div table{
+        width: 100%;
+        height: 90%; 
+        vertical-align: middle;
+    }    
+    #video {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }       
+
+
+</style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js"></script>
+
+<script>
+    function copySelectionText() {
+        var copysuccess // var to check whether execCommand successfully executed
+        try {
+            copysuccess = document.execCommand("copy") // run command to copy selected text to clipboard
+        } catch (e) {
+            copysuccess = false
+        }
+        return copysuccess
+    }
+    function copyfieldvalue(e, id) {
+        var field = document.getElementById(id)
+        field.focus()
+        field.setSelectionRange(0, field.value.length)
+        var copysuccess = copySelectionText()
+        if (copysuccess) {
+            //showtooltip(e)
+        }
+    }
+</script>
+
+<div class="row" ng-controller="MasterCtrl">  
+    <div style="float: right;">    
+        <button type="button" class="btn btn-default" ng-click="listall()"><i class="fa fa-list"></i> Instance List</button>
+        <div class="btn-group">
+            <button ng-disabled="top_menu_disable" type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> Actions</button>
+            <ul class="dropdown-menu dropdown-primary">
+                <li ng-if="current_type == 'file'">
+                    <a tabindex="-1" ng-click="toggleModal3(current_index)">
+                        <i class="dropdown-icon fa fa-eye"></i>
+                        Preview
+                    </a>
+                </li>
+                <li ng-if="current_type == 'folder'">
+                    <a tabindex="-1" ng-click="get_files(current_item)">
+                        <i class="dropdown-icon fa fa-folder-open"></i>
+                        Open Folder
+                    </a>
+                </li>
+
+                <li>
+                    <a tabindex="-1" ng-click="toggleModal1()">
+                        <i class="dropdown-icon fa fa-copy"></i>
+                        Copy Link
+                    </a>
+                </li>
+
+                <li>
+                    <a ng-if="current_type == 'file'" tabindex="-1" ng-click="download_file(current_item)">
+                        <i class="dropdown-icon fa fa-cloud-download"></i>
+                        Download
+                    </a>
+                    <a ng-if="current_type == 'folder'" tabindex="-1" ng-click="create_zip(current_item)">
+                        <i class="dropdown-icon fa fa-cloud-download"></i>
+                        Download
+                    </a>
+                </li>
+
+                <li class="divider"></li>
+                <li>
+                    <a tabindex="-1" ng-click="send_file()">
+                        <i class="dropdown-icon glyphicon glyphicon-share-alt blue"></i>
+                        Share
+                    </a>
+                </li>
+                <li>
+                    <a ng-if="current_type == 'file'" tabindex="-1" ng-click="img_remove(current_item)">
+                        <i class="dropdown-icon glyphicon glyphicon-trash red"></i>
+                        Remove
+                    </a>
+                    <a ng-if="current_type == 'folder'" tabindex="-1" ng-click="removeFolder(current_item)">
+                        <i class="dropdown-icon glyphicon glyphicon-trash red"></i>
+                        Remove
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-default" ng-click="order()"><i class="fa fa-sort"></i> Sort</button>
+        <button type="button" class="btn btn-default"><i class="fa fa-info-circle"></i> Activity</button>
+    </div>  
+    <div class="form-group" style="margin-left: 33px;">
+
+        <span class="input-icon inverted" style="width:30%">
+            <input type="text" class="form-control input-sm" placeholder="Search by File Name"  ng-model="searchcloudinstance"  style="width: 100%">
+            <i class="glyphicon glyphicon-search bg-blue"></i>                        
+        </span> 
+        <button class="btn btn-primary shiny" ng-if="fileupload" type="button" style="vertical-align: top;float: right;margin-right: 30px; " ng-click="toggleModal('Success')">File Upload</button>
+        <button class="btn btn-primary shiny" ng-if="fileupload" type="button" style="vertical-align: top;float: right;margin-right: 10px; " ng-click="addFolder()">Add Folder</button>
+        <!--<button class="btn btn-primary shiny" ng-if="fileupload" type="button" style="vertical-align: top;float: right;margin-right: 10px; " ng-click="shareFilesToUser()">Share</button>-->
+
+        <!--Single File preview code starts from here-->
+        <modal visible="showModal3" id="latest-popup" class="cloud-box">
+            <!-- slider container -->
+            <div class="container slider"  style="width: 100%;height: 100%;vertical-align:middle;">
+
+                <div class="popup-loader fadeIn fadeOut" ng-if="modalLoader"><i class="fa fa-spinner fa-pulse"></i></div>
+
+                <div class="copy-tooltip" ng-show="showModal1">
+                    <input id="url" type="text" size="60" class="form-control input-lg" ng-model='newURL' /> 
+                    <a href="#" onClick="copyfieldvalue(event, 'url');
+                                        return false" class="copy-btn">Copy</a>
+                </div>
+                <!-- enumerate all photos -->
+                <div ng-repeat="photo in master_files| orderBy:'reduced_name':reverse" class="slide" ng-if="current_index == $index" ng-switch="photo.file_type_no" style="width: 100%;height: 100%;vertical-align: middle;">
+
+                    <div class="popup-header bg-themeprimary" ng-show="current_index == $index">
+                        <div class="logo">
+                            <img ng-src="{{site_preferences.logo?site_preferences.logo:'assets/img/logoX200.png'}}"  />
+                        </div>
+                        <div class="label">
+                            <div class="img_outer_div" >
+                                <label style="text-align: center;width: 100%;font-size: 16px;" id="file_name_id">{{photo.orgnl_file_name}}</label>
+                            </div>
+                        </div>
+                        <div class="header-btn">
+                            <a href="javascript:void(0)" ng-click="toggleModal11('Success', photo.file_path)" class="link" >Copy Link</a>
+                            <a href="javascript:void(0)" ng-click="download_file(photo.file_id)" class="red-btn bg-themesecondary">Download</a>
+                        </div>
+                    </div>
+
+                    <!-- MP4-->
+                    <div ng-switch-when="1" class="img_outer_div ">
+                        <div class="text-center">
+                            <div class="center-block mp4-video">
+                                <div id="video" html5-fallback-video                       
+                                     mp4-url="{{photo.view_path}}" video-width="100%"   video-height="100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MP3-->
+                    <div ng-switch-when="2" class="img_outer_div " >
+                        <div class="text-center">
+                            <div class="center-block">
+                                <audio class="audCls" controls id="audio_pause_id1">
+                                    <source ng-src="{{photo.view_path}}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PDF/TEXT-->
+                    <div ng-switch-when="3" class="img_outer_div">
+                        <div class="html-file-sec-outer " ng-class="{'pdf-file-sec' : photo.file_type === 'pdf'}">
+                            <div class="html-file-sec">
+                                <iframe scrolling="yes" ng-src="{{$sce.trustAsResourceUrl(photo.view_path)}}" frameborder="0" class="slide" id="img_pdf2"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image-->
+                    <div ng-switch-when="4" class="img_outer_div"  >
+                        <div class="photo-file">
+                            <img ng-swipe-right="changeSlide($index - 1)" ng-swipe-left="changeSlide($index + 1)" ng-src="{{photo.view_path}}" id="img_jpg2" />
+                        </div>                    
+                    </div>
+
+                    <!-- Other Types-->
+                    <div ng-switch-default class="img_outer_div">
+                        <div class="no-file-sec">
+                            <img  ng-swipe-right="changeSlide($index - 1)" ng-swipe-left="changeSlide($index + 1)" ng-src="{{photo.img_path}}"  id="img_other2" />
+                            <label id="img_other_label2">No File Preview is Available.</label>
+                        </div>
+                    </div>
+
+                    <a class="arrow prev" ng-if="$index > 0" href="javascript:void(0)" ng-click="changeSlide($index - 1)"></a>
+                    <a class="arrow next" ng-if="$index < (master_files.length - 1)" href="javascript:void(0)" ng-click="changeSlide($index + 1)" ></a>
+                </div>                    
+
+                <div class="page-counter bg-themesecondary">{{current_index + 1}} of {{master_files.length}} Items 
+                </div>
+
+            </div>
+        </modal>
+
+    </div>
+    <div class="col-md-12">
+        <div class="profile-container"> 
+            <div class="profile-body">
+                <div class="col-lg-12">
+                    <div class="row profile-overview">
+                        <div class="col-sm-12"> 
+                            <div class="row" >
+                                <div ng-if="!fileupload" id="instencename_hid" style="float: left;">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12 folder_cls" style="width: 150px;height: 140px;"  ng-repeat="cld in cloud_instance_names| filter:searchcloudinstance | orderBy:'instance_name':reverse" > 
+                                        <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom " data-toggle="context" data-target="#context-menu{{cld_f.file_id}}" ng-click="cld_inst_files(cld.id, cld.instance_name)" ng-right-click="set_instance('{{cld.id}}')">
+                                            <img class="header-avatar" alt="" src="assets/img/avatars/folder-1.png">
+                                            <label class="label_cld">{{cld.instance_name}} </label> 
+
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div ng-if="fileupload" id="instencefiles_hid" style="float: left; position: relative;width: 100%;">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12 folder_cls {{getActive('folder', folder.folder_id)}}" style="width: 150px;height: 140px;"  ng-repeat="folder in folders| filter:searchcloudinstance | orderBy:'name':reverse" ng-click="setCurrent('folder', folder.folder_id, 0, folder.name, 0)"> 
+                                        <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom " data-toggle="context" data-target="#context-menu{{folder.folder_id}}" ng-dblclick="get_files(folder.folder_id)" ng-right-click="setCurrent('folder','{{folder.folder_id}}', 0,'{{folder.name}}', 0)">
+                                            <img class="header-avatar" alt="" src="assets/img/avatars/folder-1.png">
+                                            <label class="label_cld">{{folder.name}} </label> 
+                                        </div>
+                                        <div id="context-menu{{folder.folder_id}}" ng-show="getActive('folder', folder.folder_id) == 'active'">
+                                            <ul class="dropdown-menu" role="menu" style="cursor: pointer;">
+                                                <li>
+                                                    <a tabindex="-1" ng-click="get_files(folder.folder_id)">
+                                                        <i class="dropdown-icon fa fa-folder-open"></i>
+                                                        Open Folder
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a tabindex="-1" ng-click="toggleModal1()">
+                                                        <i class="dropdown-icon fa fa-copy"></i>
+                                                        Copy Link
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a tabindex="-1" ng-click="create_zip(folder.folder_id)">
+                                                        <i class="dropdown-icon fa fa-cloud-download"></i>
+                                                        Download
+                                                    </a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a tabindex="-1" ng-click="send_file()">
+                                                        <i class="dropdown-icon glyphicon glyphicon-share-alt blue"></i>
+                                                        Share
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ng-if="current_type == 'folder'" tabindex="-1" ng-click="removeFolder(folder.folder_id)">
+                                                        <i class="dropdown-icon glyphicon glyphicon-trash red"></i>
+                                                        Remove
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-6 col-sm-6 col-xs-12 folder_cls {{getActive('file', cld_f.file_id)}}" style="width: 150px;height: 140px;padding-right: 0px !important"  ng-repeat="cld_f in master_files| filter:searchcloudinstance | orderBy:'reduced_name':reverse"  ng-click="setCurrent('file', cld_f.file_id, cld_f.file_path, cld_f.orgnl_file_name, $index)" > 
+                                        <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom" >
+                                            <img class="header-avatar" alt="" ng-src="{{cld_f.img_path}}"  data-toggle="context" data-target="#context-menu{{cld_f.file_id}}" ng-right-click="setCurrent('file','{{cld_f.file_id}}','{{cld_f.file_path}}','{{cld_f.orgnl_file_name}}','{{$index}}')"  ng-dblclick="toggleModal3($index)"> 
+                                            <label class="label_cld">{{cld_f.reduced_name}} </label> 
+                                        </div>
+
+                                        <div id="context-menu{{cld_f.file_id}}" ng-show="getActive('file', cld_f.file_id) == 'active'">
+                                            <ul class="dropdown-menu" role="menu" style="cursor: pointer;">
+                                                <li>
+                                                    <a tabindex="-1" ng-click="toggleModal3($index)">
+                                                        <i class="dropdown-icon fa fa-eye"></i>
+                                                        Preview
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a tabindex="-1" ng-click="toggleModal1(cld_f.savd_file_name)">
+                                                        <i class="dropdown-icon fa fa-copy"></i>
+                                                        Copy Link
+                                                    </a>
+                                                </li> 
+                                                <li>
+                                                    <a tabindex="-1" ng-click="download_file(cld_f.file_id)">
+                                                        <i class="dropdown-icon fa fa-cloud-download"></i>
+                                                        Download
+                                                    </a>
+                                                </li>                                          
+                                                <li class="divider" ></li>
+
+                                                <li >
+                                                    <a tabindex="-1" ng-click="send_file()">
+                                                        <i class="dropdown-icon glyphicon glyphicon-share-alt blue"></i>
+                                                        Share
+                                                    </a>
+                                                </li>
+                                                <li >
+                                                    <a tabindex="-1" ng-click="img_remove(cld_f.file_id)">
+                                                        <i class="dropdown-icon glyphicon glyphicon-trash red"></i>
+                                                        Remove
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div> 
+                                </div> 
+
+                            </div>             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

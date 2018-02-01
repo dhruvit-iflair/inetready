@@ -1,0 +1,30 @@
+<div class="outer" ng-controller="SignupCtrl">
+    <div class="wrapper">
+        <div class="top-bar">
+            <div class="logo"><img ng-src="{{site_preferences.logo?site_preferences.logo:'assets/img/logoX200.png'}}" /></div>
+            <div class="right-sec">
+                <button class="btn btn-primary"  ui-sref="login" type="button">Login</button>
+            </div>
+        </div>
+        <div class="page-inner">
+            <form class="form"  name="adduser" ng-submit="signup()" role="form" novalidate="">
+                <div class="alert alert-danger" ng-show="errorMsg">
+                    <div><span>{{errorMsg}}</span></div>
+                </div>
+                <div class="alert alert-success" ng-show="successMsg">
+                    <div><span>{{successMsg}}</span></div>
+                </div>
+                <fieldset class="form-group" ng-class="{ 'has-error' : adduser.full_name.$invalid && !adduser.full_name.$pristine }">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" required ng-model="signupForm.full_name" />
+                </fieldset>
+                <fieldset class="form-group" ng-class="{ 'has-error' : adduser.email_address.$invalid && !adduser.email_address.$pristine }">
+                    <label>Email Address</label>
+                    <input type="email" class="form-control" placeholder="Email Address" name="email_address" required ng-model="signupForm.email_address"/>
+                </fieldset>
+                <button type="submit" class="btn btn-success btn-block sign-up-btn" ng-disabled="adduser.$invalid">Sign up</button>
+            </form>
+            <p>Please fill out name and email address and select sign up button to get your free account.</p>
+        </div>
+    </div>
+</div>

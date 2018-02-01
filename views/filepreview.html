@@ -1,0 +1,105 @@
+<!-- File Uploading code starts from here
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="UploadPopupClose()"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" >File Upload</h4>
+</div>
+<div class="modal-body">
+    <div class="container"  ng-controller="FilePreviewCtrl" >           
+         slider container 
+        <div class="container slider"  style="width: 100%;height: 100%;vertical-align:middle;">
+
+            <div class="popup-loader fadeIn fadeOut" ng-if="modalLoader"><i class="fa fa-spinner fa-pulse"></i></div>
+
+            <div class="copy-tooltip" ng-show="showModal1"><input id="url" type="text" size="60" class="form-control input-lg"  /> 
+                <a href="#" onClick="copyfieldvalue(event, 'url');
+                                return false" class="copy-btn">Copy</a>
+            </div>
+            {{photos}}
+
+             enumerate all photos 
+            <div ng-repeat="photo in photos" class="slide"  style="width: 100%;height: 100%;vertical-align: middle;">
+
+                <div class="popup-header" ng-show="isActive($index)">
+                    <div class="logo"> <img alt="logo" src="assets/img/logo.png" /> </div>
+                    <div class="label">
+                        <div ng-if="photo.file_type_no == 1"  class="img_outer_div" >
+                            <label style="text-align: center;width: 100%;font-size: 16px;"  id="file_name_id">{{photo.orgnl_file_name}}</label>
+                        </div>
+                        <div ng-if="photo.file_type_no == 2"   class="img_outer_div"  >
+                            <label style="text-align: center;width: 100%;font-size: 16px;"   id="file_name_id">{{photo.orgnl_file_name}}</label>
+                        </div>
+                        <div ng-if="photo.file_type_no == 3"  class="img_outer_div"  >
+                            <label style="text-align: center;width: 100%;font-size: 16px;"  id="file_name_id">{{photo.orgnl_file_name}}</label>
+                        </div>
+                        <div ng-if="photo.file_type_no == 4"  class="img_outer_div"  >
+                            <label style="text-align: center;width: 100%;font-size: 16px;"  id="file_name_id">{{photo.orgnl_file_name}}</label>
+                        </div>
+                        <div ng-if="photo.file_type_no == 5"  class="img_outer_div" >
+                            <label style="text-align: center;width: 100%;font-size: 16px;"   id="file_name_id">{{photo.orgnl_file_name}}</label>
+                        </div></div>
+                    <div class="header-btn">
+                        <a href="#/app/cloudinstances" ng-click="toggleModal11('Success', photo.savd_file_name)" class="link" >Copy Link</a>
+                        <a href="#/app/cloudinstances" ng-click="sel_img_dwnld(photo.savd_file_name, photo.orgnl_file_name)" class="red-btn">Download</a>
+                    </div>
+                </div>
+
+
+                 MP4
+                <div ng-if="photo.file_type_no == 1"  class="img_outer_div "  ng-show="isActive($index)">
+                    <div class="text-center">
+                        <div class="center-block mp4-video">
+                            <div id="video" ng-show="isActive($index)" html5-fallback-video                       
+                                 mp4-url="{{photo.img_path}}" video-width="100%"   video-height="100%">
+                            </div>
+                        </div>
+                    </div></div>
+
+                 MP3
+                <div ng-if="photo.file_type_no == 2"   class="img_outer_div "  ng-show="isActive($index)">
+                    <div class="text-center">
+                        <div class="center-block">
+                            <audio class="audCls" controls  ng-show="isActive($index)"  id="audio_pause_id1">
+                                <source src="{{photo.img_path}}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div></div>
+
+                 PDF/TEXT
+                <div ng-if="photo.file_type_no == 3"  ng-show="isActive($index)" class="img_outer_div">
+                    <div class="html-file-sec-outer " ng-class="{'pdf-file-sec' : photo.file_type === 'pdf'}">
+                        <div class="html-file-sec">
+                            <iframe scrolling="yes" src="{{$sce.trustAsResourceUrl(photo.img_path)}}" frameborder="0" class="slide" ng-show="isActive($index)" id="img_pdf2"></iframe>
+                        </div></div></div>
+
+                 Image
+                <div ng-if="photo.file_type_no == 4"  ng-show="isActive($index)" class="img_outer_div"  >
+                    <div class="photo-file">
+                        <img   ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" src="{{photo.img_path}}" id="img_jpg2" /></div>                    
+                </div>
+
+                 Other Types
+                <div ng-if="photo.file_type_no == 5"  class="img_outer_div"  ng-show="isActive($index)">
+                    <div class="no-file-sec">
+                        <img  ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" src="{{photo.img_path}}"  id="img_other2" />
+                        <label ng-show="isActive($index)"  id="img_other_label2">No File Preview is Available.</label>
+                    </div></div>
+
+                 prev / next controls 
+                                    <a ng-if="_Index != '0'" class="arrow prev" href="#/app/cloudinstances" ng-click="showPrev2()" ></a>
+                                    <a ng-if="_Index != (photos.length-1)" class="arrow next" href="#/app/cloudinstances" ng-click="showNext2()" ></a>
+                <a class="arrow prev" href="#/app/cloudinstances" ng-click="showPrev2(photo.file_id)" ></a>
+                <a class="arrow next" href="#/app/cloudinstances" ng-click="showNext2()" ></a>
+            </div>                    
+
+            <div class="page-counter">{{_Index + 1}} of {{photos.length}} Items 
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+ File Uploading code ends here-->

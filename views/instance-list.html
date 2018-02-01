@@ -1,0 +1,578 @@
+﻿<style>
+    input.ng-invalid {
+        border: 1px solid red;
+    }
+
+    input.ng-valid {
+        border: 1px solid green;
+    }
+</style>
+
+
+<div class="row" ng-controller="InstancelistCtrl">
+
+    <div class="col-xs-12 col-md-6" style="float:left">
+    <!--<h5 class="row-title"><i class="typcn typcn-th-small"></i><a href="" ng-click="addinstancefn()" >
+                    Add New
+                </a></h5>-->
+
+    <div class="form-group" style="margin-bottom: 0px;">
+                <h5 class="row-title"><i class="typcn typcn-th-small"></i><a ui-sref="app.addinstance" ui-sref-active="active">
+                    Add New
+                </a></h5>                
+                
+    </div>
+          
+
+
+        <div class="well with-header  with-footer">
+            <div class="header bg-blue">
+                <span style="vertical-align: middle;">Instance List</span>
+                <span class="input-icon inverted" style="width:50%;float: right;">
+                    <input type="text" class="form-control input-sm" placeholder="Search"  ng-model="searchinstance" id="searchinstance" ng-keyup="searchdetails()">
+                        <i class="glyphicon glyphicon-search bg-blue"></i>
+                        
+                </span>
+
+            </div>
+            <div  ng-show="errorMsg" role="alert" style="color:red;text-align:center;">{{errorMsg}}
+                
+            </div>
+
+
+            <!--<div class="form-group">
+                <span class="input-icon inverted" style="width:50%">
+                    <input type="text" class="form-control input-sm" placeholder="Search"  ng-model="searchinstance" id="searchinstance" ng-keyup="searchdetails()">
+                        <i class="glyphicon glyphicon-search bg-blue"></i>
+                        
+                </span>
+                
+            </div>-->
+            
+            <pagination  ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" page="currentPage"  on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit"></pagination>            
+
+            <br />
+            <table  class="table table-striped table-bordered table-hover">
+                <thead class="bordered-darkorange">
+                    <tr>
+                        <!--<th>
+                            #
+                        </th>-->
+                        <th>
+                            Instance Name&nbsp;<a ng-click="sort_by('instence_name');" style="cursor: pointer;"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            Client Name&nbsp;<a ng-click="sort_by('client_name');"  style="cursor: pointer;"><i class="glyphicon glyphicon-sort"></i></a>
+                        </th>
+                        <th>
+                            Client Status
+                        </th>                                               
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr  ng-repeat="inst in instancenames" >-->
+                    <tr ng-repeat="inst in filtered = (instancenames | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" ng-init="client_stat1='Enabled';client_stat2='Disabled';client_stat3='Suspended';client_stat4='Archived'">
+                        <!--<td>
+                            {{ $index + 1 }}
+                        </td>-->
+                        <td>
+                            {{ inst.instence_name }}
+                        </td>
+                        <td>
+                            {{ inst.client_name }}
+                        </td>  
+                        <td ng-if="inst.client_status == '0'">
+                            {{ client_stat1 }}
+                        </td>
+                        <td ng-if="inst.client_status == '1'">
+                            {{ client_stat2 }}
+                        </td>
+                        <td ng-if="inst.client_status == '2'">
+                            {{ client_stat3 }}
+                        </td>
+                        <td ng-if="inst.client_status == '3'">
+                            {{ client_stat4 }}
+                        </td>
+                        <td>
+                            
+                            <a href="#/app/manageinstances" class="btn btn-default btn-xs purple"           ng-click="editinstanceDetails(inst.cinstence_id,$index)"><i class="fa fa-edit"></i> <!--Edit--></a>
+                            <a href="#/app/manageinstances" class="btn btn-default btn-xs green"           ng-click="editglobalDetails(inst.cinstence_id,$index)"><i class="fa fa-cog"></i> <!--Settings--></a>
+                            <a href="#/app/manageinstances" class="btn btn-default btn-xs black"                                ng-click="deleteinstanceDetails(inst.cinstence_id,$index)"><i class="fa fa-trash-o"></i> <!--Delete--></a>
+                        </td>
+                    </tr> 
+                    
+                </tbody>
+            </table>           
+        </div>
+    </div>    
+                <div ><!-- Common div for edit and global settings-->
+                    <div class="col-lg-6 col-sm-6 col-xs-12" style="visibility:hidden;float:left;position:absolute;" id="updateinstance_id">
+                        <div class="widget flat radius-bordered">
+                            <div class="widget-header bg-danger">
+                                <span class="widget-caption">Update Instance</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="registration-form">
+                                    <form role="form">
+                                        <div class="form-title">
+                                            Login Information
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Username</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="loginusernameInput" ng-model="loginusernameInput" required>
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Password</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="password" class="form-control" id="loginpasswordInput" ng-model="loginpasswordInput" placeholder="Password" required>
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-title">
+                                            Database Information
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Database Username</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="databaseusernameInput"  ng-model="databaseusernameInput" required>
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Database Password</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="password" class="form-control" id="databasepasswordInput" ng-model="databasepasswordInput" placeholder="Password" required>
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Database Hostname</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="hostnameInput" ng-model="hostnameInput" placeholder="Hostname">
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Database Prefixname</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="prefixInput" ng-model="prefixInput" placeholder="Prefix Name">
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-title">
+                                            Instance Information
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Instance Name</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="instancenameInput" ng-model="instancenameInput" placeholder="Instance Name" required>
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Instance URL</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="instanceurlInput" ng-model="instanceurlInput" placeholder="Instance URL">
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Instance IP</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="instanceipInput" ng-model="instanceipInput" placeholder="Instance IP">
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-title">
+                                            Client Information
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Client Name</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="clientnameInput" ng-model="clientnameInput" placeholder="Client Name" required>
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Client Email</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="clientemailInput" ng-model="clientemailInput" placeholder="Client Email" required>
+                                                        <i class="fa fa-envelope blue"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--<div class="form-group">
+                                                    <label for="exampleInputEmail2">Expiry Date</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="expiryInput" ng-model="expiryInput" placeholder="Expiry Date">
+                                                        <i class="glyphicon glyphicon-user palegreen"></i>
+                                                    </span>
+                                                </div>-->
+                                                 <p class="input-group">                      
+                                                        <input class="form-control" id="expiryInput" ng-model="expiryInput" type="text" placeholder="Expiry Date" datepicker-popup="yyyy-MM-dd" is-open="opened" min-date="'1000-01-01'" max-date="'3000-01-01'" datepicker-options="dateOptions"  ng-required="true" close-text="Close" ng-click="open($event)" required />
+                                                         <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>                       
+                                                </p> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Default Drive Space</label>
+                                                    <span class="input-icon icon-right">
+                                                        <input type="text" class="form-control" id="defaultdriveInput" ng-model="defaultdriveInput" placeholder="Default Drive Space">
+                                                        <i class="fa fa-envelope blue"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Client Status</label>
+                                                    <span class="input-icon icon-right">
+                                                        <select id="clientstatusInput"  placeholder="Client Status">
+                                                            <option>Client Status</option>
+                                                            <option value="0">Enabled</option>
+                                                            <option value="1">Disabled</option>
+                                                            <option value="2">Suspended</option>
+                                                            <option value="3">Archived</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName2">Sync Status</label>
+                                                    <span class="input-icon icon-right">
+                                                         <select id="syncstatusInput"  placeholder="Sync Status">
+                                                            <option>Sync Status</option>
+                                                            <option value="1">Enabled</option>
+                                                            <option value="0">Disabled</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6" style="width: 100%">
+                                                
+                                                    <span id="mismatch_id" style="color: red">
+                                                    </span>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <button type="submit" class="btn btn-danger"  ng-click="updateInstanceDetails()">Update</button>
+                                        <input type="hidden" id="cinstanceid_hid"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-sm-6 col-xs-12" style="visibility:hidden;float:left" id="globalinstance_id">
+                        <div class="widget flat radius-bordered">
+                            <div class="widget-header bg-danger">
+                                <span class="widget-caption">Global Settings</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="registration-form">
+                                    <form role="form">
+                                        <div class="form-title">
+                                            User Global Settings
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Campaign View</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="campaignview" id="campaignview"  type="radio" checked="checked" value="M">
+                                                            <span class="text">Multiple </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="campaignview" id="campaignview" type="radio" class="inverted" value="S">
+                                                            <span class="text">Single</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Reg Verification</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="regverification" id="regverification" type="radio" value="Y" checked="checked">
+                                                            <span class="text">Yes </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="regverification" id="regverification" type="radio" value="N" class="inverted">
+                                                            <span class="text">No</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Chart View</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="chartview" id="chartview" type="radio" checked="checked" value="H">
+                                                            <span class="text"><img src="assets/img/chart_h.gif"> </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="chartview" id="chartview" type="radio" class="inverted" value="V">
+                                                            <span class="text"><img src="assets/img/chart_v.gif"></span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">ROI Widget</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="ROIWidget" id="ROIWidget" type="radio" checked="checked" value="Y">
+                                                            <span class="text">Yes </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="ROIWidget" id="ROIWidget" type="radio" class="inverted" value="N">
+                                                            <span class="text">No</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            
+                                            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Map View</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="MapView" id="MapView" type="radio" checked="checked" value="G">
+                                                            <span class="text">Global </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="MapView" id="MapView" value="C" type="radio" class="inverted">
+                                                            <span class="text"></span>
+
+                                                        </label>
+                                                        <select id="MapViewCountry"  placeholder="Client Status">
+                                                                <option>Country</option>
+                                                                <option value="1">India</option>
+                                                                <option value="2">U.S.A</option>
+                                                                <option value="3">Canada</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-title">
+                                            Campaign Global Settings
+
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Template</label>
+                                                    <div>
+                                                        <select id="Template"  placeholder="Client Status">
+                                                                
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Banner Ad Layout</label>
+                                                    <div>
+                                                        <select id="BannerAdLayout"  placeholder="Client Status">
+                                                                
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Encrypt URL</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="EncryptURL" id="EncryptURL" type="radio" checked="checked" value="Y">
+                                                            <span class="text">Yes </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="EncryptURL" id="EncryptURL" type="radio" class="inverted" value="N">
+                                                            <span class="text">No</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Verification Status</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="VerificationStatus" id="VerificationStatus" type="radio" checked="checked" value="Y">
+                                                            <span class="text">Yes </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="VerificationStatus" id="VerificationStatus" type="radio" class="inverted" value="N">
+                                                            <span class="text">No</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Verification Method</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="VerificationMethod" id="VerificationMethod" type="radio" value="M" checked="checked">
+                                                            <span class="text">Mail </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="VerificationMethod" id="VerificationMethod" type="radio" value="A" class="inverted">
+                                                            <span class="text">Admin</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail2">Notify Admin Of Reg</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="NotifyAdminOfReg" id="NotifyAdminOfReg" type="radio" checked="checked" value="Y">
+                                                            <span class="text">Yes </span>
+                                                        </label>
+
+                                                        <label>
+                                                            <input name="NotifyAdminOfReg" id="NotifyAdminOfReg" type="radio" class="inverted" value="N">
+                                                            <span class="text">No</span>
+
+                                                        </label>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">                                               
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="SquibKeyPluginCustomerRegFormName" placeholder="SquibKey Plugin Customer Reg Form Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="horizontal-space"></div>
+                                        <div class="row">
+                                            <div class="form-group">                                               
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="URLNotFoundRedirectPage" placeholder="URL Not Found Redirect Page">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="horizontal-space"></div>
+                                        <div class="row" style="padding-left:15px">
+
+                                        <textarea class="form-control" rows="3" placeholder="Squib Tracker Script" style="width:90%;" id="SquibTrackerScript"></textarea>
+                                        <div class="horizontal-space"></div>
+                                        </div>
+                                        <div class="horizontal-space"></div>
+                                        <div class="row" style="padding-left:15px">
+
+                                        <textarea class="form-control" rows="3" placeholder="Google Map Api Details" style="width:90%;" id="GoogleMapApiDetails"></textarea>
+                                        <div class="horizontal-space"></div>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger"  ng-click="updateglobalDetails()">Update</button>
+                                        <input type="hidden" id="cinstanceid_global_hid"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- Common div for edit and global settings-->
+</div>
+
+

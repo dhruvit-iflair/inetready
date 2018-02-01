@@ -1,0 +1,7 @@
+
+	<video class="vidCls" id="videoID" width="{{ videoWidth }}" height="{{ videoHeight }}" poster="{{ splashImage }}" controls>
+		<source src="{{ mp4Url }}" type="video/mp4" />
+		<source src="{{ webmUrl }}" type="video/webm" />
+
+		<a id="flash-player" ng-style="{'width':'{{ videoWidth }}','height':'{{ videoHeight }}','display':'block','margin':'0 auto','background-image':'url({{ splashImage }})'}"></a>
+	</video>

@@ -1,0 +1,104 @@
+<div class="row" ng-controller="ClearCampaignCtrl">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget  radius-bordered">
+            <div class="widget-header bg-themeprimary">
+                <span class="widget-caption">Campaign Clear</span>
+            </div>
+            <div class="widget-body">
+                <div class="alert alert-danger" ng-show="errorMsg">
+                    <div><span>{{errorMsg}}</span></div>
+                </div>
+                <div class="alert alert-success" ng-show="successMsg">
+                    <div><span>{{successMsg}}</span></div>
+                </div>
+                <div id="registration-form">
+                    <form name="clearCampaignForm" ng-submit="clearCampaign()" role="form">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Campaign <i class="glyphicon glyphicon-question-sign" tooltip="Campaign" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select name="name" class="college-select c-select" ng-model="clear.name" ng-options="c.name for c in campaign">
+                                              <option value="">All Campaign</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div ng-class="" class="form-group">
+                                    <label for="key_type">Clear Campaign Data By <i tooltip-placement="top" tooltip="You can clear campaign visit data and free squibkeys using one of three options All, Date Range and Keys Range" class="glyphicon glyphicon-question-sign"></i></label>
+                                    <div class="radio">
+                                        <label ng-repeat="radio in radioList">
+                                            <input type="radio" ng-model="clear.key_type" name="key_type" value="{{radio.value}}" required >
+                                            <span class="text"> {{radio.label}} </span>
+                                            &nbsp;
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="clear.key_type=='date_range'"> 
+                            <div class="col-sm-6">
+                                <div ng-class="" class="form-group">
+                                    <label for="start_date">Start Date <i tooltip-placement="top" tooltip="Campaign Start Date" class="glyphicon glyphicon-question-sign"></i></label>
+                                    <p class="input-group">
+                                        <input type="text" name="start_date" class="form-control" datepicker-popup="{{format}}" ng-model="clear.start_date" min-date="startMinDate" is-open="startOpened" datepicker-options="dateOptions" close-text="Close" ng-readonly="true" required/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openStartDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div ng-class="" class="form-group">
+                                    <label for="end_date">End Date <i tooltip-placement="top" tooltip="Campaign End Date" class="glyphicon glyphicon-question-sign"></i></label>
+                                    <p class="input-group">
+                                        <input type="text" name="end_date" class="form-control" datepicker-popup="{{format}}" ng-model="clear.end_date" min-date="endMinDate" is-open="endOpened" datepicker-options="dateOptions" close-text="Close" ng-readonly="true" required/>
+
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openEndDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div> 
+
+
+
+                        <div class="row" ng-if="clear.key_type=='keys_range'">
+                            <div class="col-sm-6">
+                                <div class="control-group">
+                                    <div ng-class="" class="form-group">
+                                        <label for="key_start_no">Key Starting Number <i tooltip-placement="top" tooltip="Key Starting Number" class="glyphicon glyphicon-question-sign"></i></label>
+                                        <span class="">
+                                            <input type="number" name="key_start_no" class="form-control" max-length="8" ng-model="clear.key_start_no" min="0" required/>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="control-group">
+                                    <div ng-class="" class="form-group">
+                                        <label for="key_end_no">Key Ending Number <i tooltip-placement="top" tooltip="Key Ending Number" class="glyphicon glyphicon-question-sign"></i></label>
+                                        <span class="">
+                                            <input type="number" name="key_end_no" class="form-control" max-length="8" ng-model="clear.key_end_no" min="0" required/>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> 
+                    <button type="submit" class="btn btn-success"  ng-disabled="clearCampaignForm.$invalid">Delete</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,297 @@
+<div ng-controller="AddCampaignCtrl" class="layout-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget flat radius-bordered">
+                    <div class="widget-header bg-themeprimary">
+                        <span class="widget-caption">Add Campaign</span>
+                        <div class="widget-buttons">
+                            <a href="" widget-maximize></a>
+                            <a href="" widget-collapse></a>
+                            <a href="" widget-dispose></a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="alert alert-danger" ng-show="errorMsg">
+                            <div><span>{{errorMsg}}</span></div>
+                        </div>
+                        <div id="simplewizardinwidget" class="wizard" data-target="#simplewizardinwidget-steps" ui-jq="wizard">
+                            <ul class="steps">
+                                <li data-target="#simplewizardinwidgetstep1" class="active"><span class="step">1</span>Step 1<span class="chevron"></span></li>
+                                <li data-target="#simplewizardinwidgetstep2"><span class="step">2</span>Step 2<span class="chevron"></span></li>
+                                <li data-target="#simplewizardinwidgetstep3"><span class="step">3</span>Step 3<span class="chevron"></span></li>
+                            </ul>
+
+                            <div class="actions" id="simplewizardinwidget-actions">
+                                <button type="button" ng-click="nextStep()" class="btn btn-default btn-sm shiny btn-prev " ng-disabled="step3.saving"> <i class="fa fa-angle-left"></i>Prev</button>
+                                <button type="button" ng-click="nextStep()" class="btn btn-default btn-sm shiny btn-next " data-last="Finish" ng-disabled="step3.saving">Next<i class="fa fa-angle-right"></i></button>
+                                <img ng-if="step3.saving" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            </div>
+                        </div>
+                        <div class="step-content" id="simplewizardinwidget-steps">
+
+                            <form name="addCampaignForm" method="POST">
+                                <div class="step-pane active" id="simplewizardinwidgetstep1" ng-form="step1" name="step1">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group" ng-class="{ 'has-error' : (step1.campaign_type.$invalid && (!step1.campaign_type.$pristine || step1.error)) }">
+                                                <label for="campaign_type">Type of Campaign <i tooltip-placement="top" tooltip="Campaign Type" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <select ng-model="campaign.campaign_type" ng-options="type.value for type in campaignList track by type.id" class="form-control" name="campaign_type" required>
+                                                        <option value="">Please Choose Campaign Type</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="step-pane" id="simplewizardinwidgetstep2" ng-form="step2" name="step2">
+
+                                    <!-- ROW START -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step2.name.$invalid && (!step2.name.$pristine || step2.error) }" class="form-group">
+                                                <label for="name">Campaign Name <i tooltip-placement="top" tooltip="Campaign Name" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <input type="text" name="name" class="form-control" ng-model="campaign.name" required=""/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" ng-if="campaign.campaign_type.id != 3">
+                                            <div ng-class="{ 'has-error' : step2.url.$invalid && (!step2.url.$pristine || step2.error) }"  class="form-group">
+                                                <label for="name">URL <i tooltip-placement="top" tooltip="Campaign URL" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <input type="url" name="url" class="form-control" ng-model="campaign.url" required/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" ng-if="campaign.campaign_type.id == 3">
+                                            <div ng-class="{ 'has-error' : step2.user.$invalid && (!step2.user.$pristine || step2.error) }" class="form-group">
+                                                <label for="name">SquibDrive User<i tooltip-placement="top" tooltip="SquibDrive User" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <ui-select ng-model="person.selected" theme="select2" ng-disabled="disabled" style="min-width: 100%;" ng-change='loadDrive()' name='user'>
+                                                        <ui-select-match placeholder="Select a user...">{{$select.selected.name}}</ui-select-match>
+                                                        <ui-select-choices repeat="person in people | propsFilter: {name: $select.search, role: $select.search}">
+                                                            <div> 
+                                                                <div ng-bind-html="person.name| highlight: $select.search"></div>
+                                                                <small>
+                                                                    <b>email:</b> {{person.email}}
+                                                                    <b>role:</b> <span ng-bind-html="''+person.role | highlight: $select.search"></span>
+                                                                </small>
+                                                            </div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div> 
+                                    <!-- ROW END -->
+                                    <!-- ROW START -->
+                                    <div class="row" ng-if="campaign.campaign_type.id == 3">
+                                        <div class="col-sm-6">
+                                            <div class="control-group">
+                                                <label for="name">Folder Type <i tooltip-placement="top" tooltip="Folder Type" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <div class="radio">
+                                                    <label ng-repeat="radio in folderType">
+                                                        <input type="radio" ng-model="campaign.folder_type" name="folder_type" ng-change="change('folder_type', campaign.folder_type)" value="{{radio.value}}" required>
+                                                        <span class="text"> {{radio.label}} </span>
+                                                        &nbsp;
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" >
+                                            <div ng-class="{ 'has-error' : step2.drive.$invalid && (!step2.drive.$pristine || step2.error) }" class="form-group">
+                                                <label for="name">SquibDrive File/Folder <i tooltip-placement="top" tooltip="SquibDrive File/Folder" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <!--{{file.selected.id}}-->
+                                                    <ui-select ng-model="file.selected" theme="select2" ng-disabled="disabled" style="min-width: 100%;" required name='drive'>
+                                                        <ui-select-match placeholder="Select a file or folder...">{{$select.selected.name}}</ui-select-match>
+                                                        <ui-select-choices repeat="file in drive | propsFilter: {name: $select.search}">
+                                                            <div style="padding-left: {{15 * file.treelevel}}px"> 
+                                                                <span style='float: left;line-height: 20px;width: 15px;' class="fa " ng-class="{'fa-folder-o': file.type === 'folder', 'fa-file-o': file.type === 'file' }" ></span>
+                                                                <div ng-bind-html="file.name| highlight: $select.search"></div>
+                                                                <!--{{file.name| highlight: $select.search}}-->
+                                                            </div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div> 
+                                    <!-- ROW END -->
+
+                                    <!-- ROW START -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step2.start_date.$invalid && (!step2.start_date.$pristine || step2.error) }" class="form-group">
+                                                <label for="name">Start Date <i tooltip-placement="top" tooltip="Campaign Start Date" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <p class="input-group">
+                                                    <input type="text" name="start_date" class="form-control" datepicker-popup="{{format}}" ng-model="campaign.start_date" min-date="startMinDate" is-open="startOpened" datepicker-options="dateOptions" close-text="Close" readonly required/>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="openStartDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step2.end_date.$invalid && (!step2.end_date.$pristine || step2.error) }" class="form-group">
+                                                <label for="name">End Date <i tooltip-placement="top" tooltip="Campaign End Date" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <p class="input-group">
+                                                    <input type="text" name="end_date" class="form-control" datepicker-popup="{{format}}" ng-model="campaign.end_date" min-date="endMinDate" is-open="endOpened" datepicker-options="dateOptions" close-text="Close" readonly required/>
+
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="openEndDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <!-- ROW END -->
+
+                                    <!-- ROW START -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step2.no_of_keys.$invalid && (!step2.no_of_keys.$pristine || step2.error) }" class="form-group">
+                                                <label for="no_of_keys">No. of Keys <i tooltip-placement="top" tooltip="No of keys" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="">
+                                                    <input type="number" name="no_of_keys" class="form-control" id="no_of_keys" min="1" ng-model="campaign.no_of_keys" required/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div ng-class="" class="form-group">
+                                                <label for="uurl_type">UURL Type <i tooltip-placement="top" tooltip="UURL Type" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <div class="radio">
+                                                    <label ng-repeat="url in urlType">
+                                                        <input type="radio" ng-model="campaign.uurl_type" name="uurl_type" value="{{url.value}}" required>
+                                                        <span class="text"> {{url.label}} </span>
+                                                        &nbsp;
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- ROW END -->
+
+                                    <!-- ROW START -->
+                                    <div class="row"> 
+                                        <div class="col-sm-6">
+                                            <div class="control-group">
+                                                <label for="name">Key Generation Type <i tooltip-placement="top" tooltip="Key Generation Type" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <div class="radio">
+                                                    <label ng-repeat="radio in radioList">
+                                                        <input type="radio" ng-model="campaign.key_generate_type" name="key_generate_type" ng-change="change('key_generate_type', campaign.key_generate_type)" value="{{radio.value}}" required>
+                                                        <span class="text"> {{radio.label}} </span>
+                                                        &nbsp;
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="control-group">
+                                                <label for="name">On The Fly <i tooltip-placement="top" tooltip="On The Fly" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <label>
+                                                        <input name="on_the_fly" class="checkbox-slider slider-icon" type="checkbox" ng-model="campaign.on_the_fly">
+                                                        <span class="text"></span>
+                                                    </label>
+                                                </span>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- ROW END -->
+
+                                    <!-- ROW START -->
+                                    <div class="row">
+
+                                        <div class="col-sm-6" ng-if="startKey">
+                                            <div class="control-group">
+                                                <div ng-class="{ 'has-error' : step2.key_start_no.$invalid && (!step2.key_start_no.$pristine || step2.error) }" class="form-group">
+                                                    <label for="name">Key Starting Number <i tooltip-placement="top" tooltip="Key Starting Number" class="glyphicon glyphicon-question-sign"></i></label>
+                                                    <span class="">
+                                                        <input type="number" name="key_start_no" class="form-control" max-length="8" min="0" ng-model="campaign.key_start_no" required/>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- ROW END -->
+
+                                </div>
+                                <div class="step-pane" id="simplewizardinwidgetstep3" ng-form="step3" name="step3">
+
+                                    <!-- ROW START -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="control-group">
+                                                <label for="name">Campaign Alerts <i tooltip-placement="top" tooltip="Campaign Alerts" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <label>
+                                                        <input name="campaign_alert" class="checkbox-slider slider-icon" type="checkbox" ng-model="campaign.campaign_alert" ng-change="change('alert', campaign.campaign_alert)" >
+                                                        <span class="text"></span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ROW END -->
+
+                                    <!-- ROW START -->
+                                    <div class="row" ng-if="show">
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step3.manager_name.$invalid && (!step3.manager_name.$pristine || step3.error) }"  class="form-group">
+                                                <label for="name">Manager Name <i tooltip-placement="top" tooltip="Campaign Manager Name" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <input name="manager_name" type="text" class="form-control" ng-model="campaign.manager_name" required/>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div ng-class="{ 'has-error' : step3.manager_email.$invalid && (!step3.manager_email.$pristine || step3.error) }" class="form-group">
+                                                <label for="name">Manager Email <i tooltip-placement="top" tooltip="Campaign Manager Email" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <span class="input-icon icon-right">
+                                                    <input name="manager_email" type="email" class="form-control" ng-model="campaign.manager_email" required/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ROW END -->
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="control-group">
+                                                <label for="name">Connection Type <i tooltip-placement="top" tooltip="Connection Type" class="glyphicon glyphicon-question-sign"></i></label>
+                                                <div class="radio">
+                                                    <label ng-repeat="connection in connectionType">
+                                                        <input type="radio" ng-model="campaign.connection_type" name="connection_type" value="{{connection.id}}" required>
+                                                        <span class="text"> {{connection.label}} </span>
+                                                        &nbsp;
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

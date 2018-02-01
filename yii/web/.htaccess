@@ -1,0 +1,16 @@
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# Remove www from any URLs that have them:
+RewriteCond %{HTTP_HOST} ^htdocs\.
+RewriteRule ^(.*)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+#RewriteRule . index.php
+RewriteRule ^.*$ /index.php [L]

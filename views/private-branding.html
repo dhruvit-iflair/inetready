@@ -1,0 +1,108 @@
+<div class="row" ng-controller="PrivateBrandCtrl" ng-if="site_preferences">
+
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+
+
+        <div class="widget flat radius-bordered">
+            <div class="widget-header bg-themeprimary">
+                <span class="widget-caption">Private Branding</span>
+            </div>
+
+            <div class="widget-body">
+                <div class="alert alert-danger" ng-show="errorMsg">
+                    <div><span>{{errorMsg}}</span></div>
+                </div>
+                <div class="alert alert-success" ng-show="successMsg">
+                    <div><span>{{successMsg}}</span></div>
+                </div>
+                <div id="registration-form" >
+                    <form name="form" ng-submit="addWebsite()" role="form"  novalidate>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : addwebsite.site_name.$invalid && !addwebsite.site_name.$pristine }">
+                                    <label for="site_name">Site Name</label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" name="site_name" class="form-control" required  ng-model="site_name" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : addwebsite.favicon.$invalid && !addwebsite.favicon.$pristine }">
+                                    <label for="favicon">Fav Icon</label>
+                                    <span class="input-icon icon-right">
+                                        <div class="img-upload-sec" >
+                                            <div class="thumbnail bg-themeprimary " style="width:20px;">
+                                                <img ng-show="favicon"  ngf-src="favicon" />
+                                                <img  ng-show='!favicon && !site_preferences.favicon' src="assets/img/favicon.png"  />
+                                                <img ng-show='!favicon && site_preferences.favicon' src="{{site_preferences.favicon}}" />
+                                            </div>
+
+                                            <div class='section-btn'>
+
+                                                <p class='support-file'>
+                                                    Only PNG, GIF, JPG files allowed.
+                                                    <span ng-show="favicon" class="text-success"><br/>You must confirm this image using save button below</span> 
+
+                                                </p>
+                                                <button class="btn btn-primary shiny" type="button"  ngf-select ng-model="favicon" name="favicon"
+                                                        ngf-accept="'image/*'" ngf-max-size="2MB" ngf-min-height="32" ngf-min-width="32"  ngf-resize="{width: 32, height: 32, quality: 1.0,centerCrop: true}">Upload Favicon</button>
+
+                                                <span class="errors red" ng-show="form.favicon.$error.minHeight || form.favicon.$error.minWidth">Min image size 32X32 in pixels</span>
+                                                <span class="errors red" ng-show="form.favicon.$error.maxSize">File too large {{favicon.size / 1000000|number:1}}MB: max 2M</span>
+
+                                            </div>
+                                        </div>
+                                        <!--                                        <input type="file" name="favicon" class="form-control" required  ng-model="website.favicon" ngf-select ngf-pattern="'image/*'"
+                                                                                       ngf-accept="'image/*'" ngf-max-size="2MB" ngf-min-height="32" ngf-min-width="32"  ngf-resize="{width: 32, height: 32, quality: 1.0,centerCrop: true}"/>-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : addwebsite.sitelogo.$invalid && !addwebsite.sitelogo.$pristine }">
+                                    <label for="sitelogo">Site Logo</label>
+                                    <span class="input-icon icon-right">
+                                        <div class="img-upload-sec" >
+                                            <div class="thumbnail bg-themeprimary" style="width:200px;">
+                                                <img ng-show="logo"  ngf-src="logo" />
+                                                <img  ng-show='!logo && !site_preferences.logo' src="assets/img/logoX200.png" />
+                                                <img ng-show='!logo && site_preferences.logo' src="{{site_preferences.logo}}" />
+                                            </div>
+
+                                            <div class='section-btn'>
+
+                                                <p class='support-file'>
+                                                    Only PNG, GIF, JPG files allowed.
+                                                    <span ng-show="logo" class="text-success"><br/>You must confirm this image using save button below</span> 
+
+                                                </p>
+                                                <button class="btn btn-primary shiny" type="button"  ngf-select ng-model="logo" name="logo" ngf-pattern="'image/*'"
+                                                        ngf-accept="'image/*'" ngf-max-size="2MB" ngf-min-height="width" ngf-resize="{width: 200, quality: 1.0}">Upload Logo</button>
+
+                                                <span class="errors red" ng-show="form.logo.$error.minHeight || form.logo.$error.minWidth">Min logo width is 200 in pixels</span>
+                                                <span class="errors red" ng-show="form.logo.$error.maxSize">File too large {{logo.size / 1000000|number:1}}MB: max 2M</span>
+
+                                            </div>
+                                        </div>
+                                        <!--                                        <input type="file" name="sitelogo" class="form-control" required  ng-model="website.sitelogo" ngf-select ngf-pattern="'image/*'"
+                                                                                       ngf-accept="'image/*'" ngf-max-size="2MB"  ngf-min-width="200"  ngf-resize="{width: 200, quality: 1.0,centerCrop: true}"/>-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<p>colors: {{permissions}}</p>-->
+                        <div><br /></div>
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success" ><i class="fa fa-check"></i> Save</button>
+                        <button type="button" ng-click="removeBrand()" class="btn btn-warning" >Reset</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

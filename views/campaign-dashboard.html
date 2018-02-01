@@ -1,0 +1,211 @@
+
+<style>
+    .flot-x-axis .flot-tick-label.tickLabel {
+        font-size: 9px;
+        margin-left: 50px;
+    }
+</style>
+<div ng-controller="CampaignDashboardCtrl">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="databox bg-white radius-bordered">
+                        <div class="databox-left bg-themesecondary">
+                            <div class="databox-piechart">
+                                <div class="easyPieChart block-center" ui-jq="easyPieChart" ui-options="{ percent: 100, lineWidth: 3, barColor:'#fff', trackColor: 'rgba(255,255,255,0.1)' , scaleColor:false, size: 47, lineCap: 'butt', animate: 500 }"><span class="white font-90 fa fa-users"></span></div>
+                            </div>
+                        </div>
+                        <div class="databox-right">
+                            <span class="databox-number themesecondary">{{cdd.total_keys}}</span>
+                            <div class="databox-text darkgray">TOTAL KEYS</div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="databox bg-white radius-bordered">
+                        <div class="databox-left bg-themethirdcolor">
+                            <div class="databox-piechart">
+                                <div class="easyPieChart block-center" ui-jq="easyPieChart" ui-options="{ percent: 100, lineWidth: 3, barColor:'#fff', trackColor: 'rgba(255,255,255,0.1)' , scaleColor:false, size: 47, lineCap: 'butt', animate: 500 }"><span class="white font-90 fa fa-globe"></span></div>
+                            </div>
+                        </div>
+                        <div class="databox-right">
+                            <span class="databox-number themethirdcolor">{{cdd.total_visits}}</span>
+
+                            <div class="databox-text darkgray">TOTAL VISITS</div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="databox bg-white radius-bordered">
+                        <div class="databox-left bg-themeprimary">
+                            <div class="databox-piechart">
+                                <div class="easyPieChart block-center" ui-jq="easyPieChart" ui-options="{ percent: 100, lineWidth: 3, barColor:'#fff', trackColor: 'rgba(255,255,255,0.1)' , scaleColor:false, size: 47, lineCap: 'butt', animate: 500 }"><span class="white font-90 fa fa-calendar"></span></div>
+                            </div>
+                        </div>
+                        <div class="databox-right">
+                            <span class="databox-number themeprimary">{{cdd.unique_visits}}</span>
+                            <div class="databox-text darkgray">UNIQUE VISITS</div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="dashboard-box">
+                        <div class="box-header">
+                            <div class="deadline">
+                                <select ng-change="changeFilter()" style="box-shadow: none; border :none;padding:0" class="form-control" ng-model="d_filter" ng-options="f for f in dashboard_filters"></select>
+                            </div>
+                        </div>
+                        <div class="box-progress" ng-if="slider_bar">
+
+                            <!--<div class="progress-handle">Day {{number}}</div>-->
+                            <!--<progressbar class="progress-xs progress-no-radius bg-whitesmoke" value=""></progressbar>-->
+                            <rzslider rz-slider-model="slider_callbacks.days" rz-slider-options="slider_callbacks.options"></rzslider>
+
+                            <!--                            <rzslider rz-slider-model="days"
+                                                                  rz-slider-options="{showSelectionBar: true}" rz-slider-on-change="onSliderChange()"></rzslider>-->
+
+
+                            <!--                            <slider ng-change="onSliderChange()" ng-model="days" style="margin:0"
+                                                                floor="1"
+                                                                ceiling="{{ceiling}}">
+                                                        </slider>-->
+                        </div>
+                        <div class="box-tabbs">
+                            <tabset flat="true" justified="true">
+                                <tab heading="Real-Time" ng-click="changeTabs(0)">
+                                    <div class="row" style="height:250px;">
+                                        <div class="col-lg-12" >
+                                            <div  campaign-chart-realtime class="chart chart-lg no-margin"></div>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Visits" ng-click="changeTabs(1)" active="true">
+                                    <div class="row">
+                                        <div class="col-lg-12"  style="height:250px;">
+                                            <div ng-if="visit_data" height="250px" style="width: 100%; display: block;" ui-jq="plot" ui-options="{{visitChartData}}, {{visitChartOptions}}" class="chart chart-lg no-margin"></div>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Referral" ng-click="changeTabs( 2)" >
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
+                                                <div ng-if="browser_data" class="databox-top">
+                                                    <div id="browser-donut-chart" browser-chart class="chart chart-lg" style="height: 165px"></div>
+                                                </div>
+                                                <div class="databox-bottom no-padding text-align-center">
+                                                    <span class="databox-text lightcarbon no-margin">Browser</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
+                                                <div ng-if="browser_data" class="databox-top">
+                                                    <div id="device-donut-chart" device-chart class="chart chart-lg" style="height: 165px"></div>
+                                                </div>
+                                                <div class="databox-bottom no-padding text-align-center">
+                                                    <span class="databox-text lightcarbon no-margin">Device</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
+                                                <div ng-if="browser_data" class="databox-top">
+                                                    <div id="source-donut-chart" source-chart class="chart chart-lg" style="height: 165px"></div>
+                                                </div>
+                                                <div class="databox-bottom no-padding text-align-center">
+                                                    <span class="databox-text lightcarbon no-margin">Source</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            
+                                </tab>
+                             </tabset>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+
+    </div>
+
+</div>
+<div ng-controller="CampLocationCtrl" class="layout-content">
+
+    <div class="card">
+        <div class="card-block">
+            <form action="#" class="filter form-inline">
+                <div class="filter-options">
+                    <div class="form-group m-r-1">
+                        <label for="age">Age:</label>
+                        <select name="age" class="followers-select c-select" ng-model="filter.age" ng-options="age.name for age in options.age track by age.value" ng-change="filterByAge()"></select>
+                    </div>
+                    <div class="form-group m-r-1">
+                        <label for="gender">Gender:</label>
+                        <select name="gender" class="college-select c-select" ng-model="filter.gender" ng-options="gender.name for gender in options.gender track by gender.value" ng-change="filterByGender()"></select>
+                    </div>
+                    <div class="form-group m-r-1">
+                        <label for="device">Device Type:</label>
+                        <select name="device" class="college-select c-select" ng-model="filter.device" ng-options="device.name for device in options.device track by device.value" ng-change="filterBydevice()"></select>
+                    </div>
+
+                    <div class="form-group m-r-1">
+                        <label for="device">Date Range:</label>
+                        <select name="device" class="college-select c-select" ng-model="filter.date" ng-options="date.name for date in options.date track by date.value" ng-change="filterByDate()"></select>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a id="" class="btn btn-white btn-rounded" ng-model='resetFilter' ng-click="clearFilter()">Reset Data</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="map-container">
+            <div id="map-canvas" style="height:400px; width: 100%"></div>
+        </div>
+    </div>
+
+
+
+    <div class="widget-body" >
+        <table id="campaignVisitorTable" class="table table-bordered" width="100%" >
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Visits</th>
+                    <th>Device</th>
+                    <th>Browser</th>
+                    <th>Source</th>
+                    <th>Domain</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>User ID</th>
+                    <th>SQUIBKey</th>
+                    <th>IP Address</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

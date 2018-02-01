@@ -1,0 +1,46 @@
+
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal"  ng-click="ULPopupClose()" class="close" type="button">×</button>
+    <h4 class="modal-title">Locate User or Send Message </h4>
+</div>
+<div class="modal-body">
+    <div id="map-canvas" style="height:300px; width: 100%"></div>
+
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-pink">
+            <span class="widget-caption">Send Message</span>
+        </div>
+
+        <div class="widget-body">
+            <div class="alert alert-danger" ng-show="errorMsg">
+                <div><span>{{errorMsg}}</span></div>
+            </div>
+            <div class="alert alert-success" ng-show="successMsg">
+                <div><span>{{successMsg}}</span></div>
+            </div>
+            <div id="horizontal-form">
+                <form class="form-horizontal" name="sendmessage" ng-submit="sendMessage()" role="form" novalidate="">
+                    <div class="row">
+                        <div class="col-md-6"  ng-class="{ 'has-error' : sendmessage.from.$invalid && !sendmessage.from.$pristine }">
+                            <input type="email" required ng-model="message.sender_email" class="form-control" placeholder="Your Email" name="from" >
+                            <div class="horizontal-space"></div>
+                        </div>
+                        <div class="col-md-6" ng-class="{ 'has-error' : sendmessage.sender.$invalid && !sendmessage.sender.$pristine }">
+                            <input type="text" class="form-control" required ng-model="message.sender_name" placeholder="Your Name" name="sender" >
+                            <div class="horizontal-space"></div>
+                        </div>
+                    </div>
+                    <textarea placeholder="Message" rows="3" required ng-model="message.message" class="form-control"></textarea>
+                    <div class="horizontal-space"></div>
+                    <div>
+                        <button type="submit" class="btn btn-primary"  ng-disabled="sendmessage.$invalid">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

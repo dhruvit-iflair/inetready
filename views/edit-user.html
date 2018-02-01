@@ -1,0 +1,350 @@
+<div class="row" ng-controller="EditUserCtrl">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget  radius-bordered">
+            <div class="widget-header bg-themeprimary">
+                <span class="widget-caption">Edit User Details</span>
+            </div>
+            <div class="widget-body">
+                <div class="alert alert-danger" ng-show="errorMsg">
+                    <div><span>{{errorMsg}}</span></div>
+                </div>
+                <div id="registration-form">
+                    <form name="edituserform" ng-submit="updateUser()" role="form" novalidate>
+                        <div class="form-title">
+                            Login Information
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.email.$invalid && !edituserform.email.$pristine }">
+                                    <label for="email">Email <i class="glyphicon glyphicon-question-sign" tooltip="Email Address" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="email" name="email" class="form-control" required  ng-model="user.email_id"  placeholder="someone@somewhere.com" />
+                                        <i class="glyphicon glyphicon-envelope themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.password.$invalid && !edituserform.password.$pristine }">
+                                    <label for="password">Password <i class="glyphicon glyphicon-question-sign" tooltip="Minimum 8 characters. Upper & lowercase letters, numerical and symbols (#/$@!*%...)" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="password" name="password" class="form-control" id="passwd" ng-model="user.passwd" ng-minlength="8" />
+                                        <i class="glyphicon glyphicon-lock themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.cpassword.$invalid && !edituserform.cpassword.$pristine }">
+                                    <label for="rpassword">Retype  Password <i class="glyphicon glyphicon-question-sign" tooltip="Must match password" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="password" name="cpassword"  class="form-control" ng-model="user.retype_passwd" pw-check="passwd" ng-minlength="8" />
+                                        <i class="glyphicon glyphicon-lock themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-title">
+                            User Information
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-4" ng-if='(globals.currentUser.user_role == "admin" || globals.currentUser.user_role == "reseller") && user.id != "1"'>
+                                <div class="form-group" >
+                                    <label >Role <i class="glyphicon glyphicon-question-sign" tooltip="Role" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" placeholder="User Roles" ng-model="user.role">     
+                                            <option value="">Select Role</option>
+                                            <option ng-if='globals.currentUser.user_role == "admin"' value="reseller">Reseller</option>
+                                            <option ng-if='globals.currentUser.user_role == "admin" || globals.currentUser.user_role == "reseller"' value="client">Client</option>
+                                            <option ng-if='globals.currentUser.user_role == "admin" || globals.currentUser.user_role == "reseller"' value="user">User</option>
+
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.username.$invalid && !edituserform.username.$pristine }">
+                                    <label for="exampleInputEmail2">Name <i class="glyphicon glyphicon-question-sign" tooltip="Full Name" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control" required ng-model="user.admin_name" name="username" />
+                                        <i class="glyphicon glyphicon-user themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.status.$invalid && !edituserform.status.$pristine }">
+                                    <label for="exampleInputEmail2">User Status <i class="glyphicon glyphicon-question-sign" tooltip="Status" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" name="status" placeholder="User Status" ng-model="user.user_status" required>
+                                            <option value="">Select Status</option>
+                                            <option value="0">Enabled</option>
+                                            <option value="1">Disabled</option>
+                                            <option value="2">Suspended</option>
+                                            <option value="3">Archived</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div ng-if="user.role == 'client' || user.role == 'user'" class="row">
+                            <div class="col-sm-4"  ng-if='globals.currentUser.user_role == "admin"'>
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.reseller_id.$invalid && !edituserform.reseller_id.$pristine }">
+                                    <label >Reseller <i class="glyphicon glyphicon-question-sign" tooltip="Select reseller" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" ng-model="user.reseller_id" required ng-change="getclients()" name="reseller_id"
+                                                ng-options="item.id as item.name for item in reseller_list" >
+                                            <option value="">Select</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" ng-if="user.role == 'user' && (globals.currentUser.user_role == 'admin' || globals.currentUser.user_role == 'reseller')">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.client_id.$invalid && !edituserform.client_id.$pristine }">
+                                    <label >Client <i class="glyphicon glyphicon-question-sign" tooltip="Select client" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control"  placeholder="Client" ng-model="user.client_id" required name="client_id"
+                                                ng-options="item.id as item.name for item in client_list" >
+                                            <option value="">Select</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-title">
+                            Address Information
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" >
+                                    <label >Organization <i class="glyphicon glyphicon-question-sign" tooltip="Organization" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control" ng-model="user.organization"  />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.address.$invalid && !edituserform.address.$pristine }">
+                                    <label for="exampleInputEmail2">Address <i class="glyphicon glyphicon-question-sign" tooltip="Address" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control"  ng-model="user.address" name="address"  />
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.city.$invalid && !edituserform.city.$pristine }">
+                                    <label for="exampleInputEmail2">City/Province <i class="glyphicon glyphicon-question-sign" tooltip="City/Province" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control"  ng-model="user.city" name="city" />
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.state.$invalid && !edituserform.state.$pristine }">
+                                    <label >State <i class="glyphicon glyphicon-question-sign" tooltip="State" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control"  ng-model="user.state" name="state" data-mask="aa" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Zip Code <i class="glyphicon glyphicon-question-sign" tooltip="Zip" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control" ng-model="user.zip"  />
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.country.$invalid && !edituserform.country.$pristine }">
+                                    <label for="exampleInputEmail2">Country <i class="glyphicon glyphicon-question-sign" tooltip="Country" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" name="country"  ng-model="user.country_code"
+                                                ng-options="item.code as item.name for item in countries" >
+                                            <option value="">Select</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-title">
+                            Personal Information
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Sex <i class="glyphicon glyphicon-question-sign" tooltip="Sex" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" placeholder="User Roles" ng-model="user.sex">
+                                            <option value="">Select</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.dob.$invalid && !edituserform.dob.$pristine }">
+                                    <label >DOB <i class="glyphicon glyphicon-question-sign" tooltip="Age" tooltip-placement="top"></i></label>
+                                    <p class="input-group">
+                                        <input type="text" name="dob" class="form-control" datepicker-popup="{{format}}" ng-model="user.dob" is-open="opened"  max-date="'maxDate'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.mobile_phone.$invalid && !edituserform.mobile_phone.$pristine }">
+                                    <label >Mobile Phone <i class="glyphicon glyphicon-question-sign" tooltip="Mobile Phone" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" name="mobile_phone" class="form-control" ng-model="user.mobile_phone"  ui-mask="(999) 999 9999"  ui-mask-placeholder ui-mask-placeholder-char="_" />
+                                        <i class="glyphicon glyphicon-phone themeprimary"></i>
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.work_phone.$invalid && !edituserform.work_phone.$pristine }">
+                                    <label >Work Phone <i class="glyphicon glyphicon-question-sign" tooltip="Work Phone" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control" name="work_phone" ng-model="user.work_phone" ui-mask="(999) 999 9999"  ui-mask-placeholder ui-mask-placeholder-char="_"  />
+                                        <i class="glyphicon glyphicon-phone-alt themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.website.$invalid && !edituserform.website.$pristine }">
+                                    <label for="exampleInputEmail2">Website <i class="glyphicon glyphicon-question-sign" tooltip="Website" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="url" class="form-control" name="website" ng-model="user.website"  />
+                                        <i class="glyphicon glyphicon-globe themeprimary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.about_me.$invalid && !edituserform.about_me.$pristine }">
+                                    <label >About Me <i class="glyphicon glyphicon-question-sign" tooltip="About me" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <textarea class="form-control" id="textareaanimated" ng-maxlength="160" name="about_me" ng-model="user.about_me" placeholder="Write Something about your skill and interest" ui-jq="autosize" ui-options="{ append: '\n' }"></textarea>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-title">
+                            Instance Information
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" >
+                                    <label for="exampleInputEmail2">SQuibCard <i class="glyphicon glyphicon-question-sign" tooltip="ON/OFF SQuibCard" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="checkbox" ng-class='settings.skin?"colored-primary":"colored - blue"' class="checkbox-slider toggle " ng-model="user.squibcard">
+                                        <span class="text">&nbsp;</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if='user.squibcard'>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.instance_name.$invalid && !edituserform.instance_name.$pristine }">
+                                    <label for="exampleInputEmail2">Vanity Name <i class="glyphicon glyphicon-question-sign" tooltip="Example: Personal or organization name here." tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="text" class="form-control" name="instance_name" ng-model="user.instance_name" placeholder="Instance Name" required ng-change="instanceUrl()">
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4" ng-if="user_permissions[10].status">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.url_type.$invalid && !edituserform.url_type.$pristine }">
+                                    <label for="exampleInputEmail2">URL Type <i class="glyphicon glyphicon-question-sign" tooltip='Select "Default" for personal domain, ie., http://john.squibdrive.net. Select Custom for Vanity Domain i.e., www.mysite.com.' tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" name="url_type" required ng-model="user.url_type" ng-change="instanceUrl()">
+                                            <option value="">Select Type</option>
+                                            <option value="0">Default</option>
+                                            <option value="1">Custom</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error' : edituserform.instance_url.$invalid && !edituserform.instance_url.$pristine }">
+                                    <label for="exampleInputName2">Domain URL <i class="glyphicon glyphicon-question-sign" tooltip="Enter your domain here (mydomain.com). Purchase from any registrar like Godaddy then set the DNS to dns3.squibdrive.net and dns4.squibdrive.net." tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input ng-readonly="user.url_type == '0'" type="url" name="instance_url" class="form-control" ng-model="user.instance_url" placeholder="Instance URL" required>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-title">
+                            Social Networks 
+                        </div>
+                        <div class="row" ng-repeat="item in user.user_social_network">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Social Network <i class="glyphicon glyphicon-question-sign" tooltip="Social Network" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <select class="form-control" name="country_code" ng-model="item.social_network_id"
+                                                ng-options="item.id as item.name for item in social_networks" >
+                                            <option value="">Select</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">URL <i class="glyphicon glyphicon-question-sign" tooltip="URL" tooltip-placement="top"></i></label>
+                                    <span class="input-icon icon-right">
+                                        <input type="url" class="form-control" ng-model="item.url"  />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 Right" >
+                                <div class="form-group">
+                                    <label for="sd">&nbsp;</label>
+                                    <span class="input-icon icon-right">
+                                        <a ng-if="$index == (user.user_social_network.length - 1)" href="javascript:void(0);" ng-click="add_network()" class="btn btn-default btn-lg"><i class="fa fa-plus"></i> Add</a>
+                                        <a ng-if="$index != (user.user_social_network.length - 1)" href="javascript:void(0);" ng-click="del_network($index)" class="btn btn-default btn-lg"><i class="fa fa-times"></i> Delete</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-success" ng-disabled="edituserform.$invalid">Save</button>
+                        <!--<button type="button" class="btn btn-azure" ng-click="updateDetails()">Update</button>-->
+                        <button type="reset" class="btn btn-warning" >Reset</button>
+                        <!--<input type="hidden" id="id_hid"/>-->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

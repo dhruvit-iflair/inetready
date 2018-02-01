@@ -1,0 +1,67 @@
+<div ng-controller="LocationCtrl" class="layout-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-block">
+                <form action="#" class="filter form-inline">
+                    <div class="filter-options">
+                        <div class="form-group m-r-1">
+                            <label for="age">Age:</label>
+                            <select name="age" class="followers-select c-select" ng-model="filter.age" ng-options="age.name for age in options.age track by age.value" ng-change="filterByAge()"></select>
+                        </div>
+                        <div class="form-group m-r-1">
+                            <label for="gender">Gender:</label>
+                            <select name="gender" class="college-select c-select" ng-model="filter.gender" ng-options="gender.name for gender in options.gender track by gender.value" ng-change="filterByGender()"></select>
+                        </div>
+                        <div class="form-group m-r-1">
+                            <label for="device">Device Type:</label>
+                            <select name="device" class="college-select c-select" ng-model="filter.device" ng-options="device.name for device in options.device track by device.value" ng-change="filterBydevice()"></select>
+                        </div>
+                        
+<!--                        <div class="form-group m-r-1">
+                            <label for="device">Referral:</label>
+                            <select name="device" class="college-select c-select" ng-model="filter.referral" ng-options="" ng-change="filterByReferral()"></select>
+                        </div>-->
+                        
+                        <div class="form-group m-r-1">
+                            <label for="device">Date Range:</label>
+                            <select name="device" class="college-select c-select" ng-model="filter.date" ng-options="date.name for date in options.date track by date.value" ng-change="filterByDate()"></select>
+                        </div>
+                        <div class="form-group pull-right">
+                            <a id="" class="btn btn-white btn-rounded" ng-model='resetFilter' ng-click="clearFilter()">Reset Data</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="map-container">
+                <div id="map-canvas" style="height:400px; width: 100%"></div>
+            </div>
+        </div>
+
+        <div class="widget-body" >
+                <table id="visitorTable" class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Visits</th>
+                            <th>Device</th>
+                            <th>Browser</th>
+                            <th>Source</th>
+                            <th>Domain</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zip</th>
+                            <th>User ID</th>
+                            <th>SQUIBKey</th>
+                            <th>IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+    </div>
+</div>

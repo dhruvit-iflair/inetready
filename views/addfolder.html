@@ -1,0 +1,19 @@
+<div class="modal-header folder-popup">
+    <button aria-hidden="true" data-dismiss="modal"  ng-click="AFPopupClose()" class="close" type="button">×</button>
+    <h4 class="modal-title">Create a New Folder </h4>
+</div>
+<form class="form-horizontal folder-popup" name="addfolder" ng-submit="addNewFolder()" role="form" novalidate="">
+    <div class="alert alert-danger" ng-show="errorMsg">
+        <div><span>{{errorMsg}}</span></div>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="form-control input-lg" ng-model="folder_name" placeholder="Folder Name" ng-pattern="/^[a-zA-Z0-9]*$/" required /> 
+    </div>
+    <div class="modal-footer folder-popup">
+        <button data-dismiss="modal"  ng-click="AFPopupClose()" class="btn btn-warning" type="button">Cancel</button>
+        <button class="btn btn-green" type="submit" ng-disabled="addfolder.$invalid">Create</button>
+    </div>
+</form>
+
+
+

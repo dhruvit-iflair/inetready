@@ -1,0 +1,8 @@
+<div ng-style="{'width':'{{ videoWidth }}px','height':'{{ videoHeight }}px'}">
+	<video id="videoID1" width="{{ videoWidth }}" height="{{ videoHeight }}" poster="{{ splashImage }}" controls >
+		<source src="{{ mp4Url }}" type="video/mp4" />
+		<source src="{{ webmUrl }}" type="video/webm" />
+
+		<a id="flash-player" ng-style="{'width':'{{ videoWidth }}px','height':'{{ videoHeight }}px','display':'block','margin':'0 auto','background-image':'url({{ splashImage }})'}"></a>
+	</video>
+</div>

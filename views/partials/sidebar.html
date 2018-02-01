@@ -1,0 +1,545 @@
+<!-- Page Sidebar Header-->
+<div class="sidebar-header-wrapper">
+    <input type="text" class="searchinput" />
+    <i class="searchicon fa fa-search"></i>
+    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+</div>
+<!-- /Page Sidebar Header -->
+<!-- Sidebar Menu -->
+<ul class="nav sidebar-menu">
+    
+    <!--Dashboard-->
+    <li ui-sref-active="active" ng-show='globals.currentUser.user_role != "user"'>
+        <a ui-sref="app.profile">
+            <i class="menu-icon glyphicon glyphicon-user"></i>
+            <span class="menu-text"> My Profile </span>
+        </a>
+    </li>
+    <!--Dashboard-->
+    <li ui-sref-active="active">
+        <a ui-sref="app.dashboard">
+            <i class="menu-icon glyphicon glyphicon-home"></i>
+            <span class="menu-text"> Dashboard </span>
+        </a>
+    </li>
+    <!--Geo MAP-->
+    <li ui-sref-active="active">
+        <a ui-sref="app.locations">
+            <i class="menu-icon glyphicon glyphicon-globe"></i>
+            <span class="menu-text"> Location </span>
+        </a>
+    </li>
+    <!--User manage-->
+    <li >
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> User Manager </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+            <li ui-sref-active="active" ng-show='globals.currentUser.user_role != "user"'>
+                <a ui-sref="app.usermanagementdetails">
+                    <span class="menu-text"> Users List </span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active" ng-show='globals.currentUser.user_role != "user"'>
+                <a ui-sref="app.adduserdetails">
+                    <span class="menu-text"> Add User </span>
+                </a>
+            </li>                         
+            <!-- <li ui-sref-active="active">
+                <a ui-sref="app.profile">
+                    <span class="menu-text"> My Profile </span>
+                </a>
+            </li>                          -->
+            <!--            <li ui-sref-active="active">
+                            <a href="javascript:void(0)">
+                                <span class="menu-text"> My Team </span>
+                            </a>
+                        </li>                         -->
+        </ul>
+    </li>
+
+    <!--Admin Settings-->
+    <li ui-sref-active="active" ng-show='globals.currentUser.user_role != "user"'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon glyphicon glyphicon-cog"></i>
+            <span class="menu-text"> Admin Settings </span>
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+            <li ui-sref-active="active" ng-show='user_permissions[12].status'>
+                <a ui-sref="app.privatebranding">
+                    <span class="menu-text"> Private Branding </span>
+                </a>
+            </li>  
+
+            <li ui-sref-active="active" ng-show='globals.currentUser.user_role == "admin"'>
+                <a ui-sref="app.globalsettings">
+                    <span class="menu-text"> Global Permissions </span>
+                </a>
+            </li>  
+            <li ui-sref-active="active" ng-show='user_permissions[9].status'>
+                <a ui-sref="app.modulepermissions">
+                    <span class="menu-text"> User Permissions </span>
+                </a>
+            </li>  
+
+            <li ui-sref-active="active" ng-show='user_permissions[10].status'>
+                <a ui-sref="app.nameserverconfig">
+                    <span class="menu-text"> Name Server Config. </span>
+                </a>
+            </li>  
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Billing Plan </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Invoices </span>
+                        </a>
+                    </li>   
+                </ul>
+
+            </li>   
+        </ul>
+
+    </li>
+    
+    <!--Reporting-->
+    <li>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-bar-chart-o"></i>
+            <span class="menu-text"> Reporting </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> GEO Distribution </span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active">
+                <a href="javascript:void(0)">
+                    <span class="menu-text"> Use Report Summary </span>
+                </a>
+            </li>                         
+        </ul>
+    </li>
+    <!--Reporting-->
+    
+    <li >
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-calendar"></i>
+            <span class="menu-text"> Campaign Wizard </span>
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.addCampaign">
+                    <span class="menu-text"> Add Campaign </span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active">
+                <a ui-sref="app.campaignList">
+                    <span class="menu-text"> Campaign List</span>
+                </a>
+            </li> 
+            <li ui-sref-active="active" ng-show='globals.currentUser.user_role == "admin"'>
+                <a ui-sref="app.archivedCampaignList">
+                    <span class="menu-text"> Archived Campaigns</span>
+                </a>
+            </li> 
+            <li ui-sref-active="active" ng-show='user_permissions[13].status'>
+                <a ui-sref="app.clearCampaign">
+                    <span class="menu-text"> Clear Campaign</span>
+                </a>
+            </li> 
+            <li ui-sref-active="active" ng-show='user_permissions[13].status'>
+                <a ui-sref="app.clearedCampaignData">
+                    <span class="menu-text"> Cleared Data</span>
+                </a>
+            </li> 
+        </ul>
+    </li>
+    
+    <!--SquibKey-->
+    <li ng-show='user_permissions[0].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-key"></i>
+            <span class="menu-text"> SquibKey </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> Add Keys </span>
+                </a>
+            </li>                         
+
+        </ul>
+    </li>
+
+    <!--Reporting-->
+    <li ng-show='user_permissions[1].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-bell"></i>
+            <span class="menu-text"> SquibPush </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Subscribers </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> View Subscribers </span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Segments </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> View Segments  </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a href="javascript:void(0)">
+                            <span class="menu-text"> Add Segments</span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Notifications </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Manual Notifications </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Triggered Notifications </span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Websites </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> View Websites </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Add Website </span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Logs </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Subscriber Logs </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Notification Logs</span>
+                        </a>
+                    </li>                         
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Pageview Logs </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Event Logs</span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Settings </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> My Account </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> My Team</span>
+                        </a>
+                    </li>                         
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Plans & Billing </span>
+                        </a>
+                    </li>                         
+
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)"  class="menu-dropdown">
+                    <span class="menu-text"> Recommend </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Refer & Earn </span>
+                        </a>
+                    </li>                         
+
+
+
+                </ul>
+            </li>                         
+
+        </ul>
+    </li>
+    <!--Reporting-->
+    <li ng-show='user_permissions[2].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-cloud"></i>
+            <span class="menu-text"> SquibDrive </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.cloudinstances" ui-sref-opts="{reload: true}" >
+                    <span class="menu-text"> View Accounts </span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Settings </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Register Drive </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a href="javascript:void(0)">
+                            <span class="menu-text"> Password</span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a href="javascript:void(0)">
+                            <span class="menu-text"> Custom Prefs </span>
+                        </a>
+                    </li>                         
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Master File </span>  
+                    <i class="menu-expand"></i>
+
+                </a>
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.masterfiles" href="javascript:void(0)">
+                            <span class="menu-text"> Update Cloud Content </span>
+                        </a>
+                    </li>                         
+                </ul>
+            </li>                         
+
+        </ul>
+    </li>
+
+    <!--Reporting-->
+    <li ng-show='user_permissions[3].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon glyphicon glyphicon-paperclip"></i>
+            <span class="menu-text"> SquibPage </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> View Pages</span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> Add Page </span>
+                </a>
+            </li>                         
+
+        </ul>
+    </li>
+
+
+    <!--SquibCard-->
+    <li ng-show='user_permissions[4].status'>
+        <a ui-sref="app.squibcards" >
+            <i class="menu-icon fa fa-life-ring"></i>
+            <span class="menu-text"> SquibCard </span>
+        </a>
+    </li>
+    <!--Reporting-->
+    <li ng-show='user_permissions[5].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-envelope-o"></i>
+            <span class="menu-text"> SquibMail </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Subscribers</span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> View Subscribers</span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Add Subscriber </span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text">View Newsletters</span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text"> Add Newsletter </span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)" class="menu-dropdown">
+                    <span class="menu-text"> Autoresponders </span>
+                    <i class="menu-expand"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text">  View Autoresponders</span>
+                        </a>
+                    </li>                         
+                    <li ui-sref-active="active">
+                        <a  href="javascript:void(0)">
+                            <span class="menu-text">  Add Autoreponsders </span>
+                        </a>
+                    </li>                         
+
+                </ul>
+            </li>                         
+
+        </ul>
+    </li>
+    <!--Reporting-->
+    <li ng-show='user_permissions[6].status'>
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-qrcode"></i>
+            <span class="menu-text"> SQuibQR </span>
+
+            <i class="menu-expand"></i>
+        </a>
+
+        <ul class="submenu">
+
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> View QR Code</span>
+                </a>
+            </li>                         
+            <li ui-sref-active="active">
+                <a  href="javascript:void(0)">
+                    <span class="menu-text"> Add QR Code </span>
+                </a>
+            </li>                         
+
+        </ul>
+    </li>
+    <!--SquibCard-->
+    <li ng-show='user_permissions[7].status' >
+        <a href="#" class="menu-dropdown">
+            <i class="menu-icon fa fa-facebook"></i>
+            <span class="menu-text"> SquibSocial </span>
+        </a>
+    </li>
+</ul>
+<div class="sidebar-collapse" style="display: none;"></div>
+<!-- /Sidebar Menu -->

@@ -1,0 +1,51 @@
+<div class="login-container animated fadeInDown" ng-controller="AdminloginCtrl">
+
+    <div class="loginbox bg-white">
+
+        <div class="loginbox-title">SIGN IN</div>
+        <div class="loginbox-social">
+            <div class="social-title ">Connect with Your Social Accounts</div>
+            <div class="social-buttons">
+                <a href="" class="button-facebook">
+                    <i class="social-icon fa fa-facebook"></i>
+                </a>
+                <a href="" class="button-twitter">
+                    <i class="social-icon fa fa-twitter"></i>
+                </a>
+                <a href="" class="button-google">
+                    <i class="social-icon fa fa-google-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="loginbox-or">
+            <div class="or-line"></div>
+            <div class="or">OR</div>
+        </div>
+        <div class="alert alert-danger" ng-show="errorMsg">
+            <div><span>{{errorMsg}}</span></div>
+        </div>
+        <div class="alert alert-success" ng-show="successMsg">
+            <div><span>{{successMsg}}</span></div>
+        </div>
+        <form ng-submit="postForm(emailid1, password1)" role="form" name="LoginForm">
+            <div class="loginbox-textbox">
+                <input type="email" class="form-control" placeholder="Email" required  ng-model="emailid1"/>
+            </div>
+            <div class="loginbox-textbox">
+                <input type="password" class="form-control" placeholder="Password" required ng-model="password1" />
+            </div>
+            <div class="loginbox-forgot" >
+                <a ui-sref="forgotPassword" >Forgot Password?</a>
+            </div>
+            <div class="loginbox-submit">
+                <input type="submit" class="btn btn-primary btn-block" value="Login" ng-disabled="LoginForm.$invalid || dataLoadingR">
+                <img style="display:inline-block;margin-top: 15px;position: absolute;right: 7px;" ng-if="dataLoadingR" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+            <!--<div class="loginbox-signup">
+                <a href="register.html">Sign Up With Email</a>
+            </div>-->
+        </form>
+    </div>
+
+
+</div>

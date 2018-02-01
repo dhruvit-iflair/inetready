@@ -1,0 +1,47 @@
+
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal"  ng-click="SHPopupClose()" class="close" type="button">×</button>
+    <h4 class="modal-title">Share via Email </h4>
+</div>
+<div class="modal-body">
+
+    <div class="alert alert-danger" ng-show="errorMsg">
+        <div><span>{{errorMsg}}</span></div>
+    </div>
+    <div class="alert alert-success" ng-show="successMsg">
+        <div><span>{{successMsg}}</span></div>
+    </div>
+    <div id="horizontal-form">
+        <form class="form-horizontal" name="shareForm" ng-submit="shareNow()" role="form" novalidate="">
+            <div class="row">
+                <div class="col-md-6"  ng-class="{ 'has-error' : shareForm.from.$invalid && !shareForm.from.$pristine }">
+                    <input type="email" required ng-model="shareData.sender_email" class="form-control" placeholder="Your Email" name="from" >
+                    <div class="horizontal-space"></div>
+                </div>
+                <div class="col-md-6" ng-class="{ 'has-error' : shareForm.sender.$invalid && !shareForm.sender.$pristine }">
+                    <input type="text" class="form-control" required ng-model="shareData.sender_name" placeholder="Your Name" name="sender" >
+                    <div class="horizontal-space"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"  ng-class="{ 'has-error' : shareForm.to.$invalid && !shareForm.to.$pristine }">
+                    <input type="email" required ng-model="shareData.to_email" class="form-control" placeholder="Email Address to Send to" name="to" >
+                    <div class="horizontal-space"></div>
+                </div>
+                <div class="col-md-6" ng-class="{ 'has-error' : shareForm.subject.$invalid && !shareForm.subject.$pristine }">
+                    <input type="text" class="form-control" required ng-model="shareData.subject" placeholder="Subject" name="subject" >
+                    <div class="horizontal-space"></div>
+                </div>
+            </div>
+            <textarea placeholder="Message" rows="3" required ng-model="shareData.message" class="form-control"></textarea>
+            <div class="horizontal-space"></div>
+            <div>
+                <button type="submit" class="btn btn-primary"  ng-disabled="shareForm.$invalid">Share Now</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+

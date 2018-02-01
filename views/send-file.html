@@ -1,0 +1,49 @@
+
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal"  ng-click="SFPopupClose()" class="close" type="button">×</button>
+    <h4 class="modal-title">Send/Push File </h4>
+</div>
+<div class="modal-body">
+    <div class="alert alert-danger" ng-show="errorMsg">
+        <div><span>{{errorMsg}}</span></div>
+    </div>
+    <div class="alert alert-success" ng-show="successMsg">
+        <div><span>{{successMsg}}</span></div>
+    </div>
+    <div>
+        <form role="form" name="sendfileForm" ng-submit="sendfile()" novalidate="">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Sent To</label>
+                <div class="control-group">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="0" name="form-field-radio" ng-model="shareFile.to" required>
+                            <span class="text">All  </span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="1" class="inverted" name="form-field-radio" ng-model="shareFile.to" >
+                            <span class="text">Selected</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="shareFile.to == '1'">
+                <!--<label for="exampleInputPassword1">Select Names you want to send</label>-->
+                <ui-select multiple ng-model="shareFile.users" theme="select2" ui-select-required style="width: 100%;" >
+                    <ui-select-match placeholder="Select...">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="user in (reseller_list | filter: { name: $select.search }) track by user.id" >
+                        {{user.name}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <button class="btn btn-primary" type="submit"  ng-disabled="sendfileForm.$invalid">Send</button>
+        </form>
+    </div>
+
+</div>
+
+
+
