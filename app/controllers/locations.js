@@ -93,9 +93,9 @@ app
                     for (i = 0; i < $scope.people.length; i++) {
                         var person = $scope.people[i];
                         var lat = person.lat,
-                                lng = person.lng,
-                                markerId = person.id,
-                                title = person.admin_name;
+                            lng = person.lng,
+                            markerId = person.id,
+                            title = person.admin_name;
                         var infoWindow = new google.maps.InfoWindow({
                             maxWidth: 300
                         });
@@ -119,7 +119,7 @@ app
 
                         google.maps.event.addListener(marker, 'click', (function (marker, content) {
                             return function () {
-                                alert('Helloo')
+                                
                                 infoWindow.setContent(content);
                                 infoWindow.open(map, marker);
                             }
@@ -135,66 +135,60 @@ app
                             {"featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{"color": "#444444"}]}, {"featureType": "landscape", "elementType": "all", "stylers": [{"color": "#f2f2f2"}]}, {"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "road", "elementType": "all", "stylers": [{"saturation": -100}, {"lightness": 45}]}, {"featureType": "road.highway", "elementType": "all", "stylers": [{"visibility": "simplified"}]}, {"featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{"visibility": "off"}]}, {"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "water", "elementType": "all", "stylers": [{"color": colors['primary-color']}, {"visibility": "on"}]}
                         ]
                     });
+                    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                     angular.forEach($scope.people, function(item) {
                         var marker = new google.maps.Marker({
                             position: new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.lng)),
-                            id: item.id
+                            title: item.admin_name,
+                            zoomControl: false,
+                            scaleControl: true,
+                            markerId: item.id,
+                            draggable: true
                         });
-                        marker.addListener('click', function() {
-                            alert('Cluster markers')
-                        })
+                        var infoWindow = new google.maps.InfoWindow({
+                            maxWidth: 300
+                        });
+                       
                         bounds.extend(marker.getPosition());
+                        if (j > 10)
+                            j = 1; // for lorempixel, the thumbnail image
+                        
+                        var content = ['<div class="map-box"><img width="50" height="50" src="', item.profile_image, '">', '<div class="iw-text"><h5 class="margin-none">', item.admin_name, '</br>', item.organization, '</br>', item.city, ', ', item.region, ' ', item.zipcode, '<br>Visit: ', item.visit, '<br>Campaign: ', item.campaign, '<br>SquibKey: ', item.squibkey, ' <br>Last Visit: ', item.last_visited, '<br><img width="15" height="15" src="', item.device_icon, '"> &nbsp;<img width="15" height="15" src="', item.browser, '"><br></h6>Domain Url: ', item.domain, '</h6></h5></div></div>'].join('');
+                        j++;
+
                         markerList.push(marker);
+                        marker.addListener('click', (function(marker, content) {
+                            return function () {
+                                infoWindow.setContent(content);
+                                infoWindow.open(map, marker);
+                            }
+                        })(marker, content))
                     })
                     if(markerCluster) markerCluster.clearMarkers();
                     markerCluster = new MarkerClusterer(map1, markerList, {
                         maxZoom: 8,
                         imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'  
                     })
-
-                    // map.setCenter(bounds.getCenter());
-                    // map.fitBounds(bounds);
-                    // $scope.myMap = map;
-
-                    // var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    // $scope.people.map(function(location, i) {
-                    //     var infoWindow = new google.maps.InfoWindow;
-                    //     var markerId = location.id
-                    //     var latLng = new google.maps.LatLng(parseFloat(location.lat), parseFloat(location.lng));
-                    //     var marker1 = new google.maps.Marker({
-                    //         position: latLng,
-                    //         title: location.admin_name,
-                    //         markerId : markerId,
-                    //         icon: 'lib/jquery/img/marker.png',
-                    //         draggable: true
-                    //     })
-
-                    //     markersClusterList[markerId] = marker1;
-                    //     markerList.push(marker1);
-                    // })
-                    
-                    // var mcOptions = {
-                    //     // maxZoom: 8,
-                    //     imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-                    // }
-                    // markerCluster = new MarkerClusterer(map, markerList,mcOptions);
-                    
-                    // google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
-                        // markerCluster.clearMarkers();
+                    google.maps.event.addListener(map1, 'zoom_changed',
+                        function() {
+                            console.log(map1.getZoom())
+                            // if (map1.getZoom() > 2) {
+                                // console.log(map1.getZoom())
+                                // alert(map1.getZoom())
+                                // alert(map.setZoom(map1.getZoom()))
+                            // };
+                    });
+                    google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+                        // markerCluster.redraw()
                         // map1.setCenter(bounds.getCenter());
                         // map1.fitBounds(bounds);
                         // map.setCenter(cluster.getCenter());
-                        // map.setZoom(map.getZoom());
-                        // cluster.markerClusterer_.maxZoom_ = 2
-                    // });
+                        // map1.setZoom(map1.getZoom());
+                        // cluster.markerClusterer_.maxZoom_ = map1.getZoom()
+                    });
                 }
             }
 
-            /*
-                Remove marker from map and our list of current markers
-                @param int id (id of the marker element)
-                @return undefined
-                */
             function removePersonMarker(id)
             {
                 if (markers[id]) {

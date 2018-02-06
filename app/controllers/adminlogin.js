@@ -5,8 +5,8 @@ app.controller('AdminloginCtrl', function ($scope, $http, $location, $timeout, G
         $scope.UID = value;
     });
 
-    console.log($location.search());
-    console.log($location.hash());
+    // console.log($location.search());
+    // console.log($location.hash());
 
     //check params to to confirm user account
     if ($stateParams.par1 && $stateParams.par2 && $stateParams.par3 && $stateParams.par4) {

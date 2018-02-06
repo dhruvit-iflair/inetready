@@ -418,25 +418,30 @@ app.controller('CampaignListCtrl', function ($scope, $http, site_config, $compil
                     $compile(nTd)($scope);
                 },
                 mRender: function (data, type, row) {
-                    if (row.type != 0) {
-                        var lnk = '<a href="/app/editCampaign/' + row.id + '"  class="btn btn-default btn-xs " title="Edit"><i class="fa fa-edit"></i> </a>';
-                        if (row.campaign_keys_count == 0) {
-                            lnk += '<a title="Export CSV" href="javascript:alert(\'Campaign Keys are waitng for approval.\')"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                    // console.log(JSON.stringify(data));
+                    // if((new Date(data.start_date)) > new Date())
+                    // {
+                        if (row.type != 0) {
+                            var lnk = '<a href="/app/editCampaign/' + row.id + '"  class="btn btn-default btn-xs " title="Edit"><i class="fa fa-edit"></i> </a>';
+                            if (row.campaign_keys_count == 0) {
+                                lnk += '<a title="Export CSV" href="javascript:alert(\'Campaign Keys are waitng for approval.\')"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                            } else {
+                                lnk += '<a title="Export CSV" id="csv-' + row.id + '"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                            }
+                            lnk += ' <a title="Archive" id="arch-' + row.id + '" class="btn btn-default btn-xs black btn-model"><i class="fa fa-times"></i> </a>';
+                            return lnk;
                         } else {
-                            lnk += '<a title="Export CSV" id="csv-' + row.id + '"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                            var lnk = '<a href="/app/editCampaign/' + row.id + '"  class="btn btn-default btn-xs " title="Edit"><i class="fa fa-edit"></i> </a>';
+                            if (row.campaign_keys_count == 0) {
+                                lnk += '<a title="Export CSV" href="javascript:alert(\'Campaign Keys are waitng for approval.\')"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                            } else {
+                                lnk += '<a title="Export CSV" id="csv-' + row.id + '"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
+                            }
+                            lnk += '<a title="Archive" id="arch-' + row.id + '" class="btn btn-default btn-xs black btn-model" ><i class="fa fa-times"></i> </a><a title="Delete" class="btn btn-default btn-xs black btn-model" id="del-' + row.id + '"><i class="fa fa-trash-o"></i> </a>';
+                            return lnk;
                         }
-                        lnk += ' <a title="Archive" id="arch-' + row.id + '" class="btn btn-default btn-xs black btn-model"><i class="fa fa-times"></i> </a>';
-                        return lnk;
-                    } else {
-                        var lnk = '<a href="/app/editCampaign/' + row.id + '"  class="btn btn-default btn-xs " title="Edit"><i class="fa fa-edit"></i> </a>';
-                        if (row.campaign_keys_count == 0) {
-                            lnk += '<a title="Export CSV" href="javascript:alert(\'Campaign Keys are waitng for approval.\')"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
-                        } else {
-                            lnk += '<a title="Export CSV" id="csv-' + row.id + '"  class="btn btn-default btn-xs btn-model" ><i class="fa fa-file-excel-o"></i> </a>';
-                        }
-                        lnk += '<a title="Archive" id="arch-' + row.id + '" class="btn btn-default btn-xs black btn-model" ><i class="fa fa-times"></i> </a><a title="Delete" class="btn btn-default btn-xs black btn-model" id="del-' + row.id + '"><i class="fa fa-trash-o"></i> </a>';
-                        return lnk;
-                    }
+                    // }
+                    
 
                 }
             },

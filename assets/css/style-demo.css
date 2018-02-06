@@ -207,8 +207,11 @@ flipper[vertical] div.flipper.flipped .back {
 .social-box .days-row{ float: left; width: 98%; margin-left: 1%; padding: 10px 0;}
 .white-bg{ background: #fff;}
 .visits-column-equal .col-sm-2{ width: 20%;}
+.visits-column-equalUser .col-sm-2{ width: 25%;}
 .visits-column-equal .notification-body .title{ padding-top: 6px;}
+.visits-column-equalUser .notification-body .title{ padding-top: 6px;}
 .visits-column-equal .notification-icon{ padding-right: 10px;}
+.visits-column-equalUser .notification-icon{ padding-right: 10px;}
 
 td.history{background:#ccc;}
 td.history table th{background:#ddd;}

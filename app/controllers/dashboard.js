@@ -10,9 +10,13 @@ app
                 $scope.currentDate = date.getDate() + " " + date.getMonth();
 
                 /* GET Dashboard Instance LIST */
+                // console.log($rootScope.globals.currentUser)
                 $http.get(site_config.apiUrl + "user/users?user_id=" + $rootScope.globals.currentUser.user_id).then(function (response)
                 {
                     if (response.data.status) {
+                        if($rootScope.globals.currentUser.user_role == "user") {
+                            $scope.hideFromUser = true
+                        }                        
                         $rootScope.dashboard_users = response.data.data;
                     }
                 });
@@ -21,6 +25,7 @@ app
                 /* GET Dashboard Data LIST */
                 $http.get(site_config.apiUrl + "user/getdashboarddata?user_id=" + $rootScope.globals.currentUser.user_id).then(function (response)
                 {
+                    console.log(response.data)
                     if (response.data.status) {
                         $rootScope.dd = response.data.data;
                         setTimeout(function () {

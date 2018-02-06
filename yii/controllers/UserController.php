@@ -3393,7 +3393,10 @@ $query = "https://72.55.146.214:2087/json-api/cpanel?cpanel_jsonapi_user=squibdr
                 return array_merge($ids, $this->getChilds($ids));
             }
         } else {
-            return array();
+            // return array()
+            return array(
+                "0" => 0
+            );
         }
     }
 

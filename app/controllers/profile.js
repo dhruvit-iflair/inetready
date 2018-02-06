@@ -3,7 +3,7 @@ app
         // Profile Controller
         .controller('ProfileCtrl', [
             '$rootScope', '$scope', '$http', 'site_config', '$location','Upload', function ($rootScope, $scope, $http, site_config, $location,Upload) {
-                
+                // console.log($rootScope.user_permissions)
                 var search_par = $location.search()
                 if (search_par.tab != '' && search_par.tab != undefined) {
                     $scope.isActive = true;
@@ -12,6 +12,33 @@ app
                 }
 
                 var user_id = $rootScope.globals.currentUser.user_id;
+                // console.log(user_id)
+
+                // Checking for followers on squibcard page
+                // $scope.followuser.follower_id = $rootScope.globals.currentUser.user_id;
+                // $scope.followuser.following_id = $scope.user.id;
+                // $http({
+                //     method: 'POST',
+                //     url: site_config.apiUrl + "message/followuser",
+                //     data: $scope.followuser,
+                //     headers: {'Content-Type': 'application/json'}
+                // }).success(function (resp) {
+                //     $scope.followTxt = resp.data.follow_status ? 'Unfollow' : 'Follow';
+                //     $scope.user.followers = resp.data.followers;
+                //     setTimeout(function () {
+                //         $rootScope.$apply(function () {
+                //             $rootScope.chart_data = 1;
+                //         });
+                //     }, 100);
+                //     //console.log($scope.user.likes);
+    
+                // }).error(function () {
+                //     console.log('Unable to save visitors');
+                // });
+
+
+
+
                 // Get existing user details
                 $http({
                     method: 'POST',
@@ -21,7 +48,9 @@ app
                     },
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (resp) {
+                    // console.log("Get user" + JSON.stringify(resp))
                     if (resp.status) {
+                        console.log(resp.data)
                         $scope.user = resp.data;
                         if($scope.user.role != "admin") {
                             $http.get(site_config.apiUrl + "api/usermodulepermission?user_id=" + $scope.user.parent_id + "&module_id=11").then(function (response)
@@ -251,8 +280,11 @@ app
                     dataType: 'json',
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (resp) {
-                    $scope.dates = [["1st February 2018",1],["31st January 2018",28],["30th January 2018",4],["29th January 2018",3],["26th January 2018",1],["25th January 2018",5]]
-                    // console.log(resp)
+                    if(resp.data.length == 0) {
+                        $scope.dates = [["1st February 2018",1],["31st January 2018",28],["30th January 2018",4],["29th January 2018",3],["26th January 2018",1],["25th January 2018",5]]
+                    } else {
+                        $scope.dates = resp.data
+                    }
                     $.plot($("#placeholder"),
                             [
                                 {

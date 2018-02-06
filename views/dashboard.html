@@ -87,7 +87,7 @@
                         </div>
                         <div class="box-tabbs">
                             <tabset flat="true" justified="true">
-                                <tab heading="Real-Time" ng-click="changeTabs(parent, 0)">
+                                <tab heading="Real-Time" ng-click="changeTabs(parent, 0)" ng-if="!hideFromUser">
                                     <div class="row" style="height:250px;">
                                         <div class="col-lg-12"   ng-if="realtime_data">
                                             <div  flot-chart-realtime class="chart chart-lg no-margin"></div>
@@ -338,7 +338,8 @@
                                     </div>
                                 </tab>-->
                             </tabset>
-                            <div class="box-visits visits-column-equal">
+                            <!-- class="box-visits visits-column-equal" -->
+                            <div  ng-class="!hideFromUser ? 'box-visits visits-column-equal' : 'box-visits visits-column-equalUser'">
                                 <div class="row">
                                     <div class="col-lg-2 col-sm-2 col-xs-10">
                                         <div class="notification" ng-class="{'tab-active': parent == 0}" ng-click="changeTabs(0, child)">
@@ -380,7 +381,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-2 col-xs-10">
+                                    <div class="col-lg-2 col-sm-2 col-xs-12">
                                         <div class="notification" ng-class="{'tab-active': parent == 3}" ng-click="changeTabs(3, child)">
                                             <div class="clearfix">
                                                 <div class="notification-icon">
@@ -394,7 +395,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-2 col-xs-10">
+                                    <div class="col-lg-2 col-sm-2 col-xs-10" ng-if="!hideFromUser">
                                         <div class="notification" ng-class="{'tab-active': parent == 4}" ng-click="changeTabs(4, child)">
                                             <div class="clearfix">
                                                 <div class="notification-icon">
@@ -723,7 +724,7 @@
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
                 <div class="databox-top">
-                    <div class="databox-row row-12">
+                    <!-- <div class="databox-row row-12">
                         <div class="databox-cell cell-3 text-center">
                             <div class="databox-number number-xxlg sonic-silver">164</div>
                             <div class="databox-text storm-cloud">online</div>
@@ -742,7 +743,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="databox-bottom">
                     <div class="databox-row row-12">

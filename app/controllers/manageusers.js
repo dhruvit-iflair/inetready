@@ -316,7 +316,13 @@ app.controller('EditUserCtrl', function ($scope, $http, $location, $window, $sta
             },
             headers: {'Content-Type': 'application/json'}
         }).success(function (resp) {
+            console.log(resp)
             if (resp.status) {
+                if(!resp.data.client_id) {
+                    $scope.showClient = false
+                } else {
+                    $scope.showClient = true
+                }
                 $scope.user = resp.data;
                 if (!$rootScope.user_permissions[10].status) {
                     $scope.user.url_type = 0;
@@ -342,6 +348,7 @@ app.controller('EditUserCtrl', function ($scope, $http, $location, $window, $sta
 
         // Update existing user details
         $scope.updateUser = function () {
+            console.log($scope.user)
             $http({
                 method: 'POST',
                 url: site_config.apiUrl + "user/updateuser",
@@ -349,6 +356,7 @@ app.controller('EditUserCtrl', function ($scope, $http, $location, $window, $sta
                 headers: {'Content-Type': 'application/json'}
             }).success(function (resp) {
                 if (resp.status) {
+                    console.log(resp)
                     $location.path("app/manageusers");
                     $scope.errorMsg = resp.data;
                 } else {
@@ -521,6 +529,7 @@ app.controller('AddUserCtrl', function ($scope, $http, $location, $window, $stat
             data: $scope.user,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (resp) {
+            console.log(resp)
             if (resp.data.trim() === 'correct') {
                 $scope.errorMsg = "User created Successfully";
                 $location.path("/app/manageusers");

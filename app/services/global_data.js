@@ -11,7 +11,7 @@ angular.module('GlobalData')
                                 {
                                     if (response.data.status) {
                                         $rootScope.user_permissions = response.data.data;
-
+                                        
                                         if (($location.path() == '/app/masterfiles' || $location.path() == '/app/cloudinstances') && !$rootScope.user_permissions[2].status) {
                                             $location.path("/app/dashboard");
                                         }
